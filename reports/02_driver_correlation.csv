@@ -1,0 +1,26 @@
+,factor,group,burnout_risk,productivity_score
+daily_screen_time,Screen time,Digital load,0.2208,-0.0778
+social_media_hours,Social media,Digital load,-0.0002,-0.14
+doomscrolling_duration,Doomscrolling,Digital load,0.2003,-0.0715
+app_switch_frequency,App switches per day,Digital load,-0.0008,-0.0822
+notification_count,Notifications per day,Digital load,0.0967,-0.0339
+smartphone_unlocks,Phone unlocks per day,Digital load,-0.0002,0.0001
+late_night_device_usage,Late-night device use,Digital load,0.158,-0.0558
+focus_sessions,Focus sessions per day,Focus & output,0.0011,0.2301
+deep_work_hours,Deep work,Focus & output,-0.0464,0.5546
+distraction_frequency,Distractions per day,Focus & output,0.1522,-0.0541
+task_completion_rate,Task completion rate,Focus & output,0.0001,0.3558
+concentration_score,Concentration,Focus & output,-0.0,0.3473
+meeting_hours,Meetings,Focus & output,-0.0001,-0.0005
+sleep_hours,Sleep,Sleep & recovery,-0.1294,0.0462
+sleep_quality,Sleep quality,Sleep & recovery,-0.0,0.0
+caffeine_intake,Caffeine,Sleep & recovery,-0.0007,0.0008
+physical_activity,Physical activity,Sleep & recovery,-0.1107,0.04
+stress_level,Stress,Sleep & recovery,0.3828,-0.135
+workspace_quality,Workspace quality,Work environment,0.0001,0.1723
+internet_stability,Internet stability,Work environment,-0.0008,0.0006
+remote_work_days,Remote days per week,Work environment,-0.0008,0.0002
+motivation_level,Motivation,Mental state,0.0003,0.229
+mental_fatigue,Mental fatigue,Mental state,-0.0001,0.0006
+emotional_exhaustion,Emotional exhaustion,Mental state,0.512,-0.1819
+work_satisfaction,Job satisfaction,Mental state,-0.2544,0.0905

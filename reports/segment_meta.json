@@ -1,0 +1,389 @@
+{
+  "n_rows": 5000000,
+  "k": 6,
+  "weights": {
+    "digital_overload": 0.9193,
+    "recovery_deficit": 0.8698,
+    "focus_capacity": 1.2306,
+    "psych_strain": 1.3631,
+    "environment_quality": 0.1785
+  },
+  "k_table": [
+    {
+      "k": 2,
+      "stability_equal": 0.6913,
+      "stability": 0.8726,
+      "stability_min": 0.7512,
+      "silhouette": 0.2192,
+      "calinski_harabasz": 6385.6556,
+      "davies_bouldin": 1.6573,
+      "eta2_burnout": 0.0978,
+      "eta2_productivity": 0.0409,
+      "min_share_%": 46.5603
+    },
+    {
+      "k": 3,
+      "stability_equal": 0.3967,
+      "stability": 0.5393,
+      "stability_min": 0.2658,
+      "silhouette": 0.2007,
+      "calinski_harabasz": 5860.6041,
+      "davies_bouldin": 1.4743,
+      "eta2_burnout": 0.0923,
+      "eta2_productivity": 0.2689,
+      "min_share_%": 31.78
+    },
+    {
+      "k": 4,
+      "stability_equal": 0.4678,
+      "stability": 0.8905,
+      "stability_min": 0.7327,
+      "silhouette": 0.1741,
+      "calinski_harabasz": 5230.0264,
+      "davies_bouldin": 1.5818,
+      "eta2_burnout": 0.1039,
+      "eta2_productivity": 0.3709,
+      "min_share_%": 23.3477
+    },
+    {
+      "k": 5,
+      "stability_equal": 0.4116,
+      "stability": 0.8852,
+      "stability_min": 0.7866,
+      "silhouette": 0.1693,
+      "calinski_harabasz": 4643.3647,
+      "davies_bouldin": 1.4739,
+      "eta2_burnout": 0.1199,
+      "eta2_productivity": 0.378,
+      "min_share_%": 18.281
+    },
+    {
+      "k": 6,
+      "stability_equal": 0.3501,
+      "stability": 0.9162,
+      "stability_min": 0.8645,
+      "silhouette": 0.1679,
+      "calinski_harabasz": 4312.3624,
+      "davies_bouldin": 1.3881,
+      "eta2_burnout": 0.1338,
+      "eta2_productivity": 0.3726,
+      "min_share_%": 16.4713
+    },
+    {
+      "k": 7,
+      "stability_equal": 0.2559,
+      "stability": 0.8456,
+      "stability_min": 0.6918,
+      "silhouette": 0.1682,
+      "calinski_harabasz": 4093.7718,
+      "davies_bouldin": 1.3575,
+      "eta2_burnout": 0.1405,
+      "eta2_productivity": 0.4076,
+      "min_share_%": 13.1553
+    },
+    {
+      "k": 8,
+      "stability_equal": 0.2511,
+      "stability": 0.6088,
+      "stability_min": 0.3715,
+      "silhouette": 0.1718,
+      "calinski_harabasz": 3928.8693,
+      "davies_bouldin": 1.2945,
+      "eta2_burnout": 0.1567,
+      "eta2_productivity": 0.3967,
+      "min_share_%": 11.8687
+    }
+  ],
+  "silhouette": 0.16784696947149824,
+  "ari_sample_vs_full": 0.9858550864994133,
+  "ari_gmm": 0.8145147166962213,
+  "ari_ward": 0.2635783191925988,
+  "pca_explained": [
+    0.2020803540945053,
+    0.20114827156066895,
+    0.20003311336040497,
+    0.1995759904384613,
+    0.1971622258424759
+  ],
+  "eta2": {
+    "burnout_risk": 0.1326320882230127,
+    "productivity_score": 0.37320407715294684
+  },
+  "index_cols": [
+    "digital_overload",
+    "recovery_deficit",
+    "focus_capacity",
+    "psych_strain",
+    "environment_quality"
+  ],
+  "index_labels": {
+    "digital_overload": "Digital overload",
+    "recovery_deficit": "Poor recovery",
+    "focus_capacity": "Focus capacity",
+    "psych_strain": "Mental strain",
+    "environment_quality": "Work environment"
+  },
+  "problem_labels": {
+    "digital_overload": "Digital overload",
+    "recovery_deficit": "Poor recovery",
+    "focus_capacity": "Low focus",
+    "psych_strain": "Mental strain",
+    "environment_quality": "Poor environment"
+  },
+  "problem_sign": {
+    "digital_overload": 1,
+    "recovery_deficit": 1,
+    "focus_capacity": -1,
+    "psych_strain": 1,
+    "environment_quality": -1
+  },
+  "index_members": {
+    "digital_overload": [
+      "daily_screen_time",
+      "social_media_hours",
+      "doomscrolling_duration",
+      "app_switch_frequency",
+      "notification_count",
+      "smartphone_unlocks",
+      "late_night_device_usage"
+    ],
+    "recovery_deficit": [
+      "sleep_hours",
+      "sleep_quality",
+      "physical_activity",
+      "caffeine_intake",
+      "stress_level"
+    ],
+    "focus_capacity": [
+      "deep_work_hours",
+      "focus_sessions",
+      "concentration_score",
+      "task_completion_rate",
+      "distraction_frequency"
+    ],
+    "psych_strain": [
+      "mental_fatigue",
+      "emotional_exhaustion",
+      "motivation_level",
+      "work_satisfaction"
+    ],
+    "environment_quality": [
+      "workspace_quality",
+      "internet_stability"
+    ]
+  },
+  "order": [
+    4,
+    5,
+    1,
+    3,
+    0,
+    2
+  ],
+  "segments": [
+    {
+      "segment_id": 4,
+      "code": "N1",
+      "name": "Low focus + mental strain",
+      "label": "N1 · Low focus + mental strain",
+      "level": "Very high",
+      "status": "vhigh",
+      "n": 835607,
+      "share": 0.1671214,
+      "burnout": 58.887451171875,
+      "productivity": 49.511558532714844,
+      "risk_score": 1.487,
+      "problems": [
+        {
+          "index": "focus_capacity",
+          "text": "low focus",
+          "z": 1.026
+        },
+        {
+          "index": "psych_strain",
+          "text": "mental strain",
+          "z": 0.982
+        }
+      ],
+      "strengths": [],
+      "actions": [
+        "Protected deep-work blocks or meeting-free days; fewer context switches",
+        "Training on prioritisation and time management; review the main sources of distraction",
+        "Regular 1:1s with managers; review workload and how clear the goals are",
+        "Recognition and development plans; access to counselling"
+      ]
+    },
+    {
+      "segment_id": 5,
+      "code": "N2",
+      "name": "Heavy device use",
+      "label": "N2 · Heavy device use",
+      "level": "High",
+      "status": "high",
+      "n": 829775,
+      "share": 0.165955,
+      "burnout": 54.561729431152344,
+      "productivity": 67.85285186767578,
+      "risk_score": 0.4379,
+      "problems": [
+        {
+          "index": "digital_overload",
+          "text": "heavy device use",
+          "z": 1.046
+        }
+      ],
+      "strengths": [],
+      "actions": [
+        "Right-to-disconnect policy after hours; turn off non-urgent notifications",
+        "Batch notifications into set times; fewer chat channels; coaching on digital habits"
+      ]
+    },
+    {
+      "segment_id": 1,
+      "code": "N3",
+      "name": "Low focus + low mental strain",
+      "label": "N3 · Low focus + low mental strain",
+      "level": "High",
+      "status": "high",
+      "n": 836373,
+      "share": 0.1672746,
+      "burnout": 41.19371795654297,
+      "productivity": 63.83574295043945,
+      "risk_score": 0.3539,
+      "problems": [
+        {
+          "index": "focus_capacity",
+          "text": "low focus",
+          "z": 0.926
+        }
+      ],
+      "strengths": [
+        {
+          "index": "psych_strain",
+          "text": "low mental strain",
+          "z": -1.084
+        }
+      ],
+      "actions": [
+        "Protected deep-work blocks or meeting-free days; fewer context switches",
+        "Training on prioritisation and time management; review the main sources of distraction"
+      ]
+    },
+    {
+      "segment_id": 3,
+      "code": "N4",
+      "name": "Mental strain + strong focus",
+      "label": "N4 · Mental strain + strong focus",
+      "level": "High",
+      "status": "high",
+      "n": 839807,
+      "share": 0.1679614,
+      "burnout": 55.75890350341797,
+      "productivity": 80.42899322509766,
+      "risk_score": 0.3251,
+      "problems": [
+        {
+          "index": "psych_strain",
+          "text": "mental strain",
+          "z": 1.063
+        }
+      ],
+      "strengths": [
+        {
+          "index": "focus_capacity",
+          "text": "strong focus",
+          "z": -0.945
+        }
+      ],
+      "actions": [
+        "Regular 1:1s with managers; review workload and how clear the goals are",
+        "Recognition and development plans; access to counselling"
+      ]
+    },
+    {
+      "segment_id": 0,
+      "code": "N5",
+      "name": "Light device use",
+      "label": "N5 · Light device use",
+      "level": "Low",
+      "status": "low",
+      "n": 824113,
+      "share": 0.1648226,
+      "burnout": 42.602867126464844,
+      "productivity": 76.19009399414062,
+      "risk_score": 0.0,
+      "problems": [],
+      "strengths": [
+        {
+          "index": "digital_overload",
+          "text": "light device use",
+          "z": -1.061
+        }
+      ],
+      "actions": [
+        "Keep current practices; use as a comparison group and as peer mentors"
+      ]
+    },
+    {
+      "segment_id": 2,
+      "code": "N6",
+      "name": "Strong focus + low mental strain",
+      "label": "N6 · Strong focus + low mental strain",
+      "level": "Low",
+      "status": "low",
+      "n": 834325,
+      "share": 0.166865,
+      "burnout": 38.412353515625,
+      "productivity": 90.87640380859375,
+      "risk_score": 0.0,
+      "problems": [],
+      "strengths": [
+        {
+          "index": "focus_capacity",
+          "text": "strong focus",
+          "z": -1.044
+        },
+        {
+          "index": "psych_strain",
+          "text": "low mental strain",
+          "z": -0.963
+        }
+      ],
+      "actions": [
+        "Keep current practices; use as a comparison group and as peer mentors"
+      ]
+    }
+  ],
+  "risk_levels": [
+    {
+      "min": 0.8,
+      "label": "Very high",
+      "status": "vhigh"
+    },
+    {
+      "min": 0.3,
+      "label": "High",
+      "status": "high"
+    },
+    {
+      "min": null,
+      "label": "Low",
+      "status": "low"
+    }
+  ],
+  "company_wide": [
+    {
+      "flag": "Sleep under 6 h",
+      "rate": 34.95,
+      "spread_pp": 0.09,
+      "action": "Company-wide sleep health programme; no work messages after 9 pm"
+    },
+    {
+      "flag": "High stress (8+)",
+      "rate": 29.99,
+      "spread_pp": 0.18,
+      "action": "Employee assistance programme (EAP) and stress-management training at all levels"
+    }
+  ],
+  "focus_level": "High"
+}

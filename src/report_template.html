@@ -1,0 +1,1388 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Burnout &amp; Productivity Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
+<style>
+/* One deliberate light theme: red and blue accents on white. */
+:root {
+  color-scheme: light;
+  --page: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f4f5f7;
+  --ink: #0b0b0b;
+  --ink-2: #4f5260;
+  --muted: #8a8d98;
+  --grid: #e6e7eb;
+  --axis: #c4c6cd;
+  --border: #e3e4e8;
+  --blue: #2a78d6;
+  --blue-ink: #1c5cab;
+  --blue-wash: rgba(42, 120, 214, 0.08);
+  --red: #e34948;
+  --red-ink: #b8322f;
+  --deemph: #c9cbd1;
+  --div-better: #1c5cab;
+  --div-worse: #c23b37;
+  --div-mid: #f3f3f1;
+  --risk-vhigh: #8f2426;
+  --risk-high: #e5605e;
+  --risk-low: #2a78d6;
+  --shadow-pop: 0 8px 28px rgba(11, 11, 11, 0.14);
+  --font: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+  --radius: 12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; background: var(--page); }
+body { margin: 0; background: var(--page); color: var(--ink); font-family: var(--font); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4 { margin: 0; font-weight: 600; text-wrap: balance; }
+p, ul, ol, dl, dd { margin: 0; }
+button, select { font: inherit; }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+.wrap { max-width: 1320px; margin: 0 auto; padding-inline: clamp(16px, 3vw, 36px); padding-block: 0 56px; }
+.theme-bar { height: 4px; background: linear-gradient(90deg, var(--red) 0 50%, var(--blue) 50% 100%); }
+
+/* ---------- masthead ---------- */
+.masthead { display: flex; flex-wrap: wrap; gap: 20px 40px; justify-content: space-between; align-items: flex-end; padding-block: 24px 22px; }
+.brand { display: flex; gap: 20px; align-items: flex-end; min-width: 0; }
+.cat-hero { width: 104px; height: 114px; flex: none; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--red-ink); }
+h1 { font-size: clamp(26px, 3.4vw, 36px); font-weight: 700; letter-spacing: -0.015em; margin-top: 6px; line-height: 1.15; }
+.lede { margin-top: 10px; max-width: 66ch; color: var(--ink-2); font-size: 15px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 32px; }
+.facts div { display: grid; }
+.facts dt { font-size: 12px; color: var(--ink-2); }
+.facts dd { font-size: 18px; font-weight: 600; }
+@media (max-width: 560px) { .cat-hero { width: 72px; height: 80px; } .brand { gap: 12px; } }
+
+/* ---------- controls ---------- */
+.controls { display: grid; gap: 12px; padding-block: 12px; border-block: 1px solid var(--border); background: var(--page); }
+@media (min-width: 760px) { .controls { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; } }
+.filters { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 14px; }
+.field { display: grid; gap: 4px; width: min(13rem, 100%); font-size: 12px; font-weight: 500; color: var(--ink-2); }
+.field.wide { width: min(21rem, 100%); }
+.field select {
+  width: 100%; font-size: 14px; color: var(--ink); background-color: var(--surface);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%238a8d98' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+  border: 1px solid var(--border); border-radius: 8px; padding: 7px 32px 7px 10px; appearance: none; cursor: pointer;
+}
+.field select:hover { border-color: var(--axis); }
+.btn-ghost { font-size: 13px; font-weight: 500; color: var(--blue-ink); background: transparent; border: 0; border-radius: 8px; padding: 8px 10px; cursor: pointer; }
+.btn-ghost:hover:not(:disabled) { background: var(--blue-wash); }
+.btn-ghost:disabled { color: var(--muted); cursor: default; }
+.scope { font-size: 12.5px; color: var(--ink-2); margin-left: auto; align-self: center; max-width: 52ch; }
+.scope strong { color: var(--ink); font-weight: 600; }
+.tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.tab { position: relative; font-size: 14px; font-weight: 500; color: var(--ink-2); background: none; border: 0; border-radius: 8px; padding: 8px 14px 10px; cursor: pointer; white-space: nowrap; }
+.tab:hover { color: var(--ink); background: var(--surface-2); }
+.tab[aria-selected="true"] { color: var(--ink); font-weight: 600; background: var(--surface-2); }
+.tab[aria-selected="true"]::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: 4px; height: 2px; border-radius: 2px; background: var(--blue); }
+
+/* ---------- KPI row ---------- */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 176px), 1fr)); gap: 12px; margin-block: 20px; }
+.kpi { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px 12px; display: grid; gap: 2px; align-content: start; }
+.kpi-label { font-size: 12.5px; font-weight: 500; color: var(--ink-2); }
+.kpi-value { font-size: 28px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; white-space: nowrap; }
+.kpi-unit { font-size: 15px; font-weight: 500; color: var(--ink-2); letter-spacing: 0; }
+.kpi-sub { font-size: 12px; color: var(--ink-2); }
+.kpi-delta { font-size: 12px; font-weight: 600; }
+.is-good { color: var(--blue-ink); }
+.is-bad { color: var(--red-ink); }
+.is-flat { color: var(--ink-2); }
+
+/* ---------- panels & cards ---------- */
+.panel { display: grid; gap: 16px; grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.card { grid-column: span 6; min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px 16px; display: grid; gap: 14px; align-content: start; }
+.card.w12 { grid-column: 1 / -1; }
+.card.w5 { grid-column: span 5; }
+.card.w7 { grid-column: span 7; }
+@media (max-width: 1080px) { .card, .card.w5, .card.w7 { grid-column: 1 / -1; } }
+.card.intro { border-top: 3px solid var(--red); }
+.card-head { display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: space-between; align-items: flex-start; }
+.card-head > div { display: grid; gap: 4px; max-width: 80ch; }
+.card h2 { font-size: 16px; }
+.intro-title { display: flex; align-items: center; gap: 10px; }
+.cat-mini { width: 30px; height: 33px; flex: none; }
+.sub { font-size: 13px; color: var(--ink-2); }
+.scope-tag { font-size: 11.5px; font-weight: 500; color: var(--ink-2); background: var(--surface-2); border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12.5px; color: var(--ink-2); }
+.legend > span { display: inline-flex; align-items: center; gap: 7px; }
+.sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; flex: none; }
+.sw-line { display: inline-block; width: 16px; height: 3px; border-radius: 2px; flex: none; }
+.sw-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 2px var(--surface); flex: none; }
+.sw-ramp { display: inline-block; width: 72px; height: 10px; border-radius: 3px; flex: none; }
+.sw-ring { display: inline-block; width: 14px; height: 14px; border-radius: 3px; box-shadow: inset 0 0 0 2px var(--ink); flex: none; }
+.chart { min-width: 0; }
+.note { font-size: 12.5px; color: var(--ink-2); }
+
+/* ---------- table view & data tables ---------- */
+.table-view summary { cursor: pointer; width: max-content; font-size: 12.5px; font-weight: 500; color: var(--blue-ink); }
+.table-view summary:hover { text-decoration: underline; }
+.table-scroll { overflow-x: auto; }
+.table-view .table-scroll { margin-top: 8px; max-height: 360px; overflow-y: auto; border: 1px solid var(--grid); border-radius: 8px; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.data-table th, .data-table td { padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--grid); white-space: nowrap; vertical-align: middle; }
+.data-table thead th { position: sticky; top: 0; z-index: 1; background: var(--surface); font-weight: 600; color: var(--ink-2); }
+.data-table tbody tr:last-child td { border-bottom: 0; }
+.num { text-align: right !important; font-variant-numeric: tabular-nums; }
+
+/* ---------- horizontal & diverging bars ---------- */
+.hbar, .divbar { display: grid; gap: 4px; }
+.hbar-row, .divbar-row { display: grid; grid-template-columns: minmax(6.5rem, 40%) minmax(0, 1fr); align-items: center; gap: 12px; min-height: 26px; padding: 1px 6px; border-radius: 6px; }
+.hbar-row:hover, .hbar-row.is-hot, .divbar-row:hover, .divbar-row.is-hot { background: var(--blue-wash); }
+.hbar-row:focus-visible, .divbar-row:focus-visible { outline-offset: 0; }
+.hbar-label, .divbar-label { font-size: 13px; line-height: 1.25; color: var(--ink-2); }
+.hbar-track { position: relative; height: 16px; }
+.hbar-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--blue); border-radius: 0 4px 4px 0; }
+.hbar-fill.is-deemph { background: var(--deemph); }
+.hbar-value { position: absolute; top: 50%; transform: translateY(-50%); font-size: 12.5px; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink); }
+.hbar-value.is-inside { color: #ffffff; font-weight: 600; }
+.hbar-ref { position: absolute; top: -4px; bottom: -4px; width: 2px; margin-left: -1px; border-radius: 1px; background: var(--ink); opacity: 0.6; }
+.divbar-track { position: relative; height: 14px; }
+.divbar-track::before { content: ""; position: absolute; left: 50%; top: -5px; bottom: -5px; width: 1px; background: var(--axis); }
+.divbar-fill { position: absolute; top: 0; bottom: 0; }
+.divbar-fill.pos { left: 50%; border-radius: 0 4px 4px 0; }
+.divbar-fill.neg { right: 50%; border-radius: 4px 0 0 4px; }
+.divbar-value { position: absolute; top: 50%; transform: translateY(-50%); font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink); }
+.divbar-axis { display: grid; grid-template-columns: minmax(6.5rem, 40%) minmax(0, 1fr); gap: 12px; padding: 0 6px; font-size: 11px; color: var(--muted); }
+.divbar-axis > span:last-child { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+
+/* ---------- svg charts ---------- */
+.chart svg { display: block; max-width: 100%; height: auto; overflow: visible; }
+.ax text { font-family: var(--font); font-size: 11px; fill: var(--muted); }
+.ax .row-label { font-size: 12.5px; fill: var(--ink-2); }
+.dot-label { font-family: var(--font); font-size: 11px; font-weight: 600; fill: var(--ink-2); }
+.gridline { stroke: var(--grid); stroke-width: 1; shape-rendering: crispEdges; }
+.baseline { stroke: var(--axis); stroke-width: 1; shape-rendering: crispEdges; }
+.band { fill: var(--div-mid); }
+.col { fill: var(--blue); }
+.col.is-deemph { fill: var(--deemph); }
+.col.is-hot { opacity: 0.78; }
+.ref-line { stroke: var(--ink-2); stroke-width: 1; opacity: 0.55; }
+.dot { stroke: var(--surface); stroke-width: 2; }
+.dot.is-hot { stroke: var(--ink); }
+.hit { cursor: default; }
+.hit:focus-visible { outline: none; stroke: var(--blue); stroke-width: 2; }
+
+/* ---------- heatmaps ---------- */
+.heat { display: grid; gap: 2px; width: max-content; min-width: 100%; }
+.heat-corner { min-height: 1px; }
+.heat-colhead { align-self: end; padding: 0 4px 6px; font-size: 12px; font-weight: 600; color: var(--ink-2); text-align: center; line-height: 1.25; white-space: pre-line; }
+.heat-colhead.is-sel { color: var(--ink); }
+.heat-rowlabel { display: flex; align-items: center; min-height: 34px; padding-right: 12px; font-size: 12.5px; line-height: 1.25; color: var(--ink-2); }
+.heat-cell { display: grid; place-items: center; min-height: 34px; border-radius: 3px; font-size: 12.5px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.heat-cell.is-sel, .heat-cell.is-flip { box-shadow: inset 0 0 0 2px var(--ink); }
+.heat .heat-cell:hover { box-shadow: inset 0 0 0 1px var(--ink); }
+.heat .heat-cell.is-flip:hover { box-shadow: inset 0 0 0 3px var(--ink); }
+.heat-gap { width: 10px; }
+.ramp-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 11.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+
+/* ---------- segments ---------- */
+.pill { --st: var(--muted); display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px 2px 6px; border-radius: 999px; font-size: 12px; font-weight: 600; color: var(--ink); background: color-mix(in srgb, var(--st) 14%, transparent); white-space: nowrap; }
+.pill svg { width: 14px; height: 14px; flex: none; color: var(--st); }
+.st-vhigh { --st: var(--risk-vhigh); }
+.st-high { --st: var(--risk-high); }
+.st-low { --st: var(--risk-low); }
+.seg-table tbody tr { cursor: pointer; }
+.seg-table tbody tr:hover td, .seg-table tbody tr:focus-visible td { background: var(--blue-wash); }
+.seg-table tbody tr.is-sel td { background: var(--blue-wash); }
+.seg-table tbody tr.is-sel td:first-child { box-shadow: inset 3px 0 0 var(--blue); }
+.seg-table td.seg-name { white-space: normal; min-width: 14rem; }
+.code { font-weight: 700; font-variant-numeric: tabular-nums; }
+.code-badge { display: inline-grid; place-items: center; min-width: 30px; height: 22px; padding: 0 6px; border-radius: 6px; background: var(--ink); color: #ffffff; font-size: 12px; font-weight: 700; }
+.steps { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 12px; counter-reset: step; }
+.steps li { counter-increment: step; display: grid; gap: 4px; align-content: start; padding: 12px 14px; border-radius: 10px; background: var(--surface-2); font-size: 13px; color: var(--ink-2); }
+.steps li::before { content: counter(step); display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--surface); color: var(--ink); font-size: 12px; font-weight: 700; box-shadow: inset 0 0 0 1px var(--border); }
+.steps strong { color: var(--ink); font-weight: 600; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 10px; }
+.metric { display: grid; gap: 2px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); }
+.metric .v { font-size: 20px; font-weight: 600; }
+.metric .l { font-size: 12px; color: var(--ink-2); line-height: 1.35; }
+.callout { padding: 12px 14px; border-radius: 10px; background: var(--surface-2); font-size: 13px; color: var(--ink-2); max-width: 120ch; }
+.callout strong { color: var(--ink); }
+.dens-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 900px) { .dens-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .dens-grid { grid-template-columns: minmax(0, 1fr); } }
+.dens { display: grid; gap: 8px; align-content: start; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); cursor: pointer; }
+.dens:hover { border-color: var(--axis); }
+.dens.is-sel { border-color: transparent; box-shadow: 0 0 0 2px var(--blue); }
+.dens-head { display: flex; gap: 8px; justify-content: space-between; align-items: flex-start; }
+.dens-title { font-size: 13px; font-weight: 600; line-height: 1.3; }
+.dens-meta { font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.seg-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); gap: 16px; }
+.seg-card { display: grid; gap: 14px; align-content: start; padding: 18px 20px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.seg-card.is-sel { border-color: transparent; box-shadow: 0 0 0 2px var(--blue); }
+.seg-card-head { display: flex; gap: 10px; justify-content: space-between; align-items: flex-start; }
+.seg-card h3 { font-size: 16px; line-height: 1.3; }
+.seg-card h4, .gtile h4 { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 6px; }
+.minis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.mini { display: grid; gap: 1px; padding: 8px 10px; border-radius: 8px; background: var(--surface-2); }
+.mini .v { font-size: 18px; font-weight: 600; }
+.mini .l { font-size: 11.5px; color: var(--ink-2); }
+.mini .d { font-size: 11.5px; font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: var(--surface-2); font-size: 12.5px; color: var(--ink); }
+.chip::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
+.chip.worse::before { background: var(--div-worse); }
+.chip.better::before { background: var(--div-better); }
+.chip .z { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.list { padding-left: 18px; display: grid; gap: 6px; font-size: 13px; }
+.list li::marker { color: var(--muted); }
+.list .num-inline { font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.insights { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px; }
+.insight { display: grid; gap: 6px; align-content: start; padding: 14px; border-radius: 10px; background: var(--surface-2); }
+.insight h3 { font-size: 14px; }
+.insight p { font-size: 13px; color: var(--ink-2); }
+.insight strong { color: var(--ink); font-weight: 600; }
+
+/* ---------- risk-level sheet ---------- */
+.takeaway { font-size: 14.5px; line-height: 1.65; max-width: 110ch; }
+.takeaway strong { font-weight: 600; }
+.gtiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; }
+.gtile { display: grid; gap: 12px; align-content: start; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); }
+.gtile-head { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; align-items: start; }
+.gtile h3 { font-size: 14.5px; line-height: 1.3; }
+.gtile .gsub { grid-column: 2; font-size: 12px; color: var(--ink-2); }
+.cmp-table td.hc { text-align: center; font-variant-numeric: tabular-nums; font-weight: 500; border-radius: 3px; border-bottom: 2px solid var(--surface); }
+.cmp-table th.gh { text-align: center; }
+.cmp-table td.dom { font-size: 11.5px; color: var(--muted); }
+.spread { display: flex; align-items: center; gap: 8px; min-width: 120px; }
+.spread-bar { height: 8px; border-radius: 0 3px 3px 0; background: var(--blue); flex: none; }
+.spread span { font-variant-numeric: tabular-nums; font-size: 12px; color: var(--ink-2); }
+.levers { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px 24px; }
+.levers h3 { font-size: 13px; margin-bottom: 8px; }
+.lever { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: baseline; padding-block: 5px; border-bottom: 1px solid var(--grid); font-size: 13px; }
+.lever:last-child { border-bottom: 0; }
+.lever i { width: 8px; height: 8px; border-radius: 50%; align-self: center; }
+.lever .rng { font-variant-numeric: tabular-nums; color: var(--ink-2); font-size: 12px; white-space: nowrap; }
+
+footer { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--ink-2); display: grid; gap: 6px; }
+footer code { font-family: var(--mono); font-size: 12px; }
+
+/* ---------- tooltip ---------- */
+.tooltip { position: fixed; z-index: 60; pointer-events: none; display: grid; gap: 3px; max-width: 320px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--ink); box-shadow: var(--shadow-pop); font-size: 12.5px; }
+.tip-title { font-size: 12px; color: var(--ink-2); margin-bottom: 1px; }
+.tip-row { display: flex; align-items: center; gap: 8px; }
+.tip-row strong { font-weight: 600; font-variant-numeric: tabular-nums; }
+.tip-label { color: var(--ink-2); }
+.tip-key { width: 12px; height: 3px; border-radius: 2px; flex: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .tab, .btn-ghost, .hbar-row, .divbar-row, .dens, .field select { transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease; }
+  .cat-hero .tail { transform-origin: 84px 116px; animation: tail 4s ease-in-out infinite; }
+  @keyframes tail { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-6deg); } }
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="cat" viewBox="0 0 120 132">
+    <path class="tail" d="M84 116 C104 118 114 102 110 86 C107 75 97 72 94 79 C92 84 98 86 100 92 C103 101 96 108 84 108 Z" fill="#141414"/>
+    <ellipse cx="58" cy="97" rx="31" ry="30" fill="#141414"/>
+    <path d="M36 42 L33 13 L55 31 Z" fill="#141414"/>
+    <path d="M80 42 L83 13 L61 31 Z" fill="#141414"/>
+    <circle cx="58" cy="52" r="26" fill="#141414"/>
+    <path d="M38.5 35 L37 20 L48.5 30 Z" fill="#e5605e"/>
+    <path d="M77.5 35 L79 20 L67.5 30 Z" fill="#e5605e"/>
+    <ellipse cx="47.5" cy="51" rx="6" ry="7" fill="#2a78d6"/>
+    <ellipse cx="68.5" cy="51" rx="6" ry="7" fill="#2a78d6"/>
+    <ellipse cx="47.5" cy="51.5" rx="1.9" ry="5.2" fill="#0b0b0b"/>
+    <ellipse cx="68.5" cy="51.5" rx="1.9" ry="5.2" fill="#0b0b0b"/>
+    <circle cx="49.6" cy="48" r="1.7" fill="#ffffff"/>
+    <circle cx="70.6" cy="48" r="1.7" fill="#ffffff"/>
+    <path d="M55 61 H61 L58 64.5 Z" fill="#e5605e"/>
+    <g stroke="#b8bac2" stroke-width="1.3" stroke-linecap="round" fill="none">
+      <path d="M44 63 L20 58"/><path d="M44 66 L20 67"/>
+      <path d="M72 63 L96 58"/><path d="M72 66 L96 67"/>
+    </g>
+    <path d="M37 73 Q58 84 79 73 L79 79.5 Q58 90.5 37 79.5 Z" fill="#e34948"/>
+    <circle cx="58" cy="89" r="4.2" fill="#2a78d6"/>
+    <ellipse cx="45" cy="126" rx="9.5" ry="5.2" fill="#141414"/>
+    <ellipse cx="71" cy="126" rx="9.5" ry="5.2" fill="#141414"/>
+  </symbol>
+</svg>
+
+<div class="theme-bar" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="masthead">
+    <div class="brand">
+      <svg class="cat-hero" role="img" aria-label="Black cat illustration"><use href="#cat"></use></svg>
+      <div>
+        <p class="eyebrow">HR analytics report · Digital burnout &amp; productivity</p>
+        <h1>Burnout &amp; Productivity Map</h1>
+        <p class="lede">What problems employees report, how those problems relate to burnout and productivity, and which groups of employees need which kind of support.</p>
+      </div>
+    </div>
+    <dl class="facts" id="facts"></dl>
+  </header>
+
+  <div class="controls">
+    <div class="filters" role="group" aria-label="Filters">
+      <label class="field wide" for="f-seg" id="field-seg"><span>Employee group</span><select id="f-seg"></select></label>
+      <label class="field wide" for="f-level" id="field-level" hidden><span>Risk level</span><select id="f-level"></select></label>
+      <label class="field" for="f-occ"><span>Occupation</span><select id="f-occ"></select></label>
+      <label class="field" for="f-wm"><span>Work mode</span><select id="f-wm"></select></label>
+      <button type="button" class="btn-ghost" id="f-reset">Reset filters</button>
+      <p class="scope" id="scope" aria-live="polite"></p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Report sheets">
+      <button class="tab" role="tab" id="tab-btn-issues" aria-controls="tab-issues" aria-selected="true">Workplace problems</button>
+      <button class="tab" role="tab" id="tab-btn-segments" aria-controls="tab-segments" aria-selected="false" tabindex="-1">Employee groups</button>
+      <button class="tab" role="tab" id="tab-btn-risk" aria-controls="tab-risk" aria-selected="false" tabindex="-1">Groups within a risk level</button>
+      <button class="tab" role="tab" id="tab-btn-actions" aria-controls="tab-actions" aria-selected="false" tabindex="-1">Starting points for action</button>
+    </div>
+  </div>
+
+  <section class="kpis" id="kpis" aria-label="Key figures"></section>
+
+  <main>
+    <!-- ================= SHEET 1: problems ================= -->
+    <section class="panel" id="tab-issues" role="tabpanel" aria-labelledby="tab-btn-issues">
+      <article class="card w12 intro">
+        <div class="card-head">
+          <div><h2 class="intro-title"><svg class="cat-mini" aria-hidden="true"><use href="#cat"></use></svg>What the data shows</h2><p class="sub">Four main findings about workplace problems, based on all 5 million employees.</p></div>
+          <span class="scope-tag">All data</span>
+        </div>
+        <div class="insights" id="insights"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <div><h2>Factors linked to burnout risk</h2><p class="sub">Pearson correlation (r) between each factor and burnout risk.</p></div>
+          <span class="scope-tag" data-scope>Filtered</span>
+        </div>
+        <div class="legend"><span><i class="sw" style="background:var(--div-worse)"></i>Goes with a worse outcome</span><span><i class="sw" style="background:var(--div-better)"></i>Goes with a better outcome</span></div>
+        <div class="chart" id="corr-burn"></div>
+        <div id="corr-burn-tv"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <div><h2>Factors linked to productivity</h2><p class="sub">Pearson correlation (r) between each factor and the productivity score.</p></div>
+          <span class="scope-tag" data-scope>Filtered</span>
+        </div>
+        <div class="legend"><span><i class="sw" style="background:var(--div-worse)"></i>Goes with a worse outcome</span><span><i class="sw" style="background:var(--div-better)"></i>Goes with a better outcome</span></div>
+        <div class="chart" id="corr-prod"></div>
+        <div id="corr-prod-tv"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <div><h2>Common warning signs</h2><p class="sub">Share of employees with each warning sign. The black mark is the all-employee rate when a filter is on.</p></div>
+          <span class="scope-tag" data-scope>Filtered</span>
+        </div>
+        <div class="chart" id="flags-chart"></div>
+        <div id="flags-tv"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <div><h2>Problems add up</h2><p class="sub" id="nfl-sub">Number of warning signs per employee.</p></div>
+          <span class="scope-tag" data-scope>Filtered</span>
+        </div>
+        <div class="legend"><span><i class="sw" style="background:var(--blue)"></i>4 or more warning signs</span><span><i class="sw" style="background:var(--deemph)"></i>Fewer than 4</span></div>
+        <div class="chart" id="nfl-chart"></div>
+        <div id="nfl-tv"></div>
+      </article>
+    </section>
+
+    <!-- ================= SHEET 2: groups ================= -->
+    <section class="panel" id="tab-segments" role="tabpanel" aria-labelledby="tab-btn-segments" hidden>
+      <article class="card w12 intro">
+        <div class="card-head">
+          <div><h2 class="intro-title"><svg class="cat-mini" aria-hidden="true"><use href="#cat"></use></svg>How the groups were built, and how far to trust them</h2><p class="sub">K-Means on all 5 million employees, checked against Gaussian Mixture and Ward clustering. Technical details are in the notebook.</p></div>
+          <span class="scope-tag">All data</span>
+        </div>
+        <ol class="steps" id="steps"></ol>
+        <div class="metrics" id="metrics"></div>
+        <p class="callout" id="method-note"></p>
+      </article>
+
+      <article class="card w12">
+        <div class="card-head">
+          <div><h2>Six employee groups</h2><p class="sub">Ordered by priority for support. Click a row to highlight that group in every chart.</p></div>
+          <span class="scope-tag" data-scope-ow>By occupation &amp; work mode</span>
+        </div>
+        <div class="table-scroll"><table class="data-table seg-table" id="seg-table"></table></div>
+      </article>
+
+      <article class="card w12">
+        <div class="card-head">
+          <div><h2>Problem profile of each group</h2><p class="sub">Standard deviations from the all-employee average, turned so that red means worse than average and blue means better.</p></div>
+          <span class="scope-tag" data-scope-ow>By occupation &amp; work mode</span>
+        </div>
+        <div class="ramp-legend" id="prob-legend"></div>
+        <div class="chart" id="prob-heat"></div>
+        <div id="prob-heat-tv"></div>
+      </article>
+
+      <article class="card w12">
+        <div class="card-head">
+          <div><h2>Where each group sits on the burnout × productivity map</h2><p class="sub">Density of employees in each group: productivity across, burnout risk up. The top-left corner is the highest-risk area.</p></div>
+          <span class="scope-tag" data-scope-ow>By occupation &amp; work mode</span>
+        </div>
+        <div class="legend"><span><i class="sw-ramp" id="dens-ramp"></i>fewer → more employees</span><span><i class="sw-dot"></i>Group average</span><span><i class="sw-line" style="background:var(--ink-2);height:1px;opacity:.7"></i>All-employee average</span></div>
+        <div class="chart" id="dens"></div>
+        <div id="dens-tv"></div>
+      </article>
+
+      <article class="card w12">
+        <div class="card-head">
+          <div><h2>Warning signs by group</h2><p class="sub">Share of each group with the warning sign. Darker cells mean the sign is more common.</p></div>
+          <span class="scope-tag" data-scope-ow>By occupation &amp; work mode</span>
+        </div>
+        <div class="ramp-legend" id="flag-legend"></div>
+        <div class="chart" id="flag-heat"></div>
+        <div id="flag-heat-tv"></div>
+      </article>
+    </section>
+
+    <!-- ================= SHEET 3: groups within a risk level ================= -->
+    <section class="panel" id="tab-risk" role="tabpanel" aria-labelledby="tab-btn-risk" hidden>
+      <article class="card w12 intro">
+        <div class="card-head">
+          <div><h2 class="intro-title"><svg class="cat-mini" aria-hidden="true"><use href="#cat"></use></svg><span id="risk-title">Same risk level, different causes</span></h2><p class="sub">Choose a risk level in the filter bar above.</p></div>
+          <span class="scope-tag" data-scope-ow>By occupation &amp; work mode</span>
+        </div>
+        <p class="takeaway" id="risk-takeaway"></p>
+        <div class="gtiles" id="risk-tiles"></div>
+      </article>
+
+      <article class="card w7">
+        <div class="card-head">
+          <div><h2>Problem profile</h2><p class="sub">Standard deviations from all employees. Each dot is labelled with its group code.</p></div>
+        </div>
+        <div class="legend"><span><i class="sw-dot" style="background:var(--div-worse)"></i>Worse than average (0.3 SD or more)</span><span><i class="sw-dot" style="background:var(--div-better)"></i>Better than average</span><span><i class="sw-dot" style="background:var(--deemph)"></i>Near average</span></div>
+        <div class="chart" id="risk-dots"></div>
+        <div id="risk-dots-tv"></div>
+      </article>
+
+      <article class="card w5">
+        <div class="card-head">
+          <div><h2>Outcomes</h2><p class="sub">Red cells are worse than all employees; blue cells are better.</p></div>
+        </div>
+        <div class="table-scroll"><table class="data-table cmp-table" id="risk-outcomes"></table></div>
+      </article>
+
+      <article class="card w12">
+        <div class="card-head">
+          <div><h2>Behaviours that differ most</h2><p class="sub">Average value in each group, sorted by the gap between the highest and lowest group (in standard deviations). Colour shows whether the value is worse or better than all employees.</p></div>
+        </div>
+        <div class="ramp-legend" id="risk-beh-legend"></div>
+        <div class="table-scroll"><table class="data-table cmp-table" id="risk-behaviour"></table></div>
+      </article>
+
+      <article class="card w12">
+        <div class="card-head">
+          <div><h2>Correlations inside each group</h2><p class="sub">Which factors go with burnout and productivity <em>inside</em> each group, next to all employees. Red: goes with a worse outcome · blue: goes with a better outcome.</p></div>
+        </div>
+        <div class="ramp-legend" id="risk-corr-legend"></div>
+        <div class="chart" id="risk-corr"></div>
+        <div id="risk-corr-tv"></div>
+        <p class="callout" id="risk-corr-note"></p>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <div><h2>Reliable levers</h2><p class="sub">Same direction in every group at this level, with |r| of at least 0.10 in each group.</p></div>
+        </div>
+        <div class="levers" id="risk-levers"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <div><h2>What this means for action</h2></div>
+        </div>
+        <ul class="list" id="risk-implications"></ul>
+      </article>
+    </section>
+
+    <!-- ================= SHEET 4: actions ================= -->
+    <section class="panel" id="tab-actions" role="tabpanel" aria-labelledby="tab-btn-actions" hidden>
+      <article class="card w12 intro">
+        <div class="card-head">
+          <div><h2 class="intro-title"><svg class="cat-mini" aria-hidden="true"><use href="#cat"></use></svg>From groups to actions</h2><p class="sub" id="actions-intro"></p></div>
+          <span class="scope-tag" data-scope-ow>By occupation &amp; work mode</span>
+        </div>
+        <div class="seg-cards" id="seg-cards"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <div><h2>Problems shared by all groups</h2><p class="sub">Warning signs with almost the same rate in every group. Grouping does not help to target them, so they call for company-wide measures.</p></div>
+        </div>
+        <div id="company-wide"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <div><h2>Limitations</h2></div>
+        </div>
+        <ul class="list" id="caveats"></ul>
+      </article>
+    </section>
+  </main>
+
+  <footer id="footer"></footer>
+</div>
+
+<div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+
+<script type="application/json" id="dash-data">/*__DATA__*/{}</script>
+<script>
+(() => {
+  'use strict';
+
+  // ================= data & derived constants =================
+  const D = JSON.parse(document.getElementById('dash-data').textContent);
+  const C = D.cells, S = D.seg;
+  const V = D.vars.length, NC = C.n.length, F = D.flags.length;
+  const VIX = Object.fromEntries(D.vars.map((v, i) => [v.key, i]));
+  const pix = (i, j) => { if (i > j) [i, j] = [j, i]; return i * V - (i * (i - 1)) / 2 + (j - i); };
+  const OCC = D.dims.occupation, WM = D.dims.work_mode, NSEG = D.dims.segment;
+  const OB = D.meta.outcome_bins;
+  const SEG = S.segments;
+  const SEG_OF = Object.fromEntries(SEG.map((s) => [s.segment_id, s]));
+  const IDX = S.index_cols;
+  const FIX = Object.fromEntries(D.flags.map((f, i) => [f, i]));
+  const OUTCOMES = ['burnout_risk', 'productivity_score'];
+  const DRIVERS = D.vars.map((v) => v.key).filter((k) => k !== 'age' && !OUTCOMES.includes(k));
+  const LEVELS = [];
+  for (const sg of SEG) if (!LEVELS.includes(sg.level)) LEVELS.push(sg.level);
+  const LEVEL_SEGS = Object.fromEntries(LEVELS.map((l) => [l, SEG.filter((sg) => sg.level === l)]));
+  const FLAG_BURN = 'Burnout risk 70+', FLAG_LOW = 'Low productivity category';
+  const RAMP = ['#e8f1fc', '#cde2fb', '#b7d3f6', '#9ec5f4', '#86b6ef', '#6da7ec', '#5598e7', '#3987e5', '#2a78d6', '#256abf', '#1c5cab', '#184f95', '#104281'];
+  const NAME_Z = 0.3;
+  const label = (k) => D.vars[VIX[k]].label;
+  const short = (k) => label(k).replace(/ \(.*\)$/, '');
+  const groupOf = (k) => D.vars[VIX[k]].group;
+
+  // ================= aggregation =================
+  const ARR_KEYS = ['cnt', 's1', 's2', 'xs', 'xp', 'flags', 'nfl', 'idx', 'o2'];
+  function aggregate(pred) {
+    const A = { n: 0 };
+    for (const k of ARR_KEYS) A[k] = new Float64Array(C[k][0].length);
+    for (let c = 0; c < NC; c++) {
+      const [s_, o, w] = C.key[c];
+      if (!pred(s_, o, w)) continue;
+      A.n += C.n[c];
+      for (const k of ARR_KEYS) { const src = C[k][c], dst = A[k]; for (let i = 0; i < src.length; i++) dst[i] += src[i]; }
+    }
+    return A;
+  }
+  const mean = (A, k) => { const i = VIX[k]; return A.cnt[i] ? D.mu_raw[i] + A.s1[i] / A.cnt[i] : NaN; };
+  const sd = (A, k) => {
+    const i = VIX[k], n = A.cnt[i];
+    if (n < 2) return NaN;
+    const m = A.s1[i] / n;
+    return Math.sqrt(Math.max(0, A.s2[i] / n - m * m) * n / (n - 1));
+  };
+  function corr(A, a, b) {
+    const i = VIX[a], j = VIX[b], n = A.n;
+    if (n < 3) return NaN;
+    const mi = A.xs[i] / n, mj = A.xs[j] / n;
+    const cov = A.xp[pix(i, j)] / n - mi * mj;
+    const vi = A.xp[pix(i, i)] / n - mi * mi, vj = A.xp[pix(j, j)] / n - mj * mj;
+    return cov / Math.sqrt(vi * vj);
+  }
+  const rate = (A, f) => (A.n ? A.flags[FIX[f]] / A.n : NaN);
+  const avgFlags = (A) => { let s_ = 0; for (let k = 0; k < A.nfl.length; k++) s_ += k * A.nfl[k]; return A.n ? s_ / A.n : NaN; };
+  const shareAtLeast = (A, k0) => { let s_ = 0; for (let k = k0; k < A.nfl.length; k++) s_ += A.nfl[k]; return A.n ? s_ / A.n : NaN; };
+  const idxMean = (A, j) => (A.n ? A.idx[j] / A.n : NaN);
+
+  // ================= formatting =================
+  const NFS = [0, 1, 2, 3].map((d) => new Intl.NumberFormat('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }));
+  const MINUS = '−';
+  const fmtN = (v, d = 0) => (Number.isFinite(v) ? NFS[d].format(v).replace('-', MINUS) : '–');
+  const fmtPct = (v, d = 1) => (Number.isFinite(v) ? fmtN(v * 100, d) + '%' : '–');
+  const fmtSigned = (v, d = 2) => {
+    if (!Number.isFinite(v)) return '–';
+    const r = Math.round(Math.abs(v) * 10 ** d) / 10 ** d;
+    return r === 0 ? fmtN(0, d) : (v > 0 ? '+' : MINUS) + fmtN(r, d);
+  };
+  const compactParts = (v) => (v >= 1e6 ? [fmtN(v / 1e6, 2), 'M'] : v >= 1e4 ? [fmtN(v / 1e3, 0), 'k'] : [fmtN(v), '']);
+  const fmtCompact = (v) => compactParts(v).join('');
+  const fmtStat = (v) => {
+    if (!Number.isFinite(v)) return '–';
+    const a = Math.abs(v);
+    return fmtN(v, a >= 100 ? 0 : a >= 10 ? 1 : 2);
+  };
+
+  // ================= DOM helpers =================
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  function setAttrs(el, attrs) {
+    for (const [k, v] of Object.entries(attrs)) {
+      if (v == null || v === false) continue;
+      if (k === 'text') el.textContent = v;
+      else el.setAttribute(k, v === true ? '' : String(v));
+    }
+  }
+  function add(el, kids) { for (const k of kids.flat(Infinity)) { if (k == null || k === false) continue; el.append(k instanceof Node ? k : document.createTextNode(String(k))); } }
+  const h = (tag, attrs = {}, ...kids) => { const el = document.createElement(tag); setAttrs(el, attrs); add(el, kids); return el; };
+  const s = (tag, attrs = {}, ...kids) => { const el = document.createElementNS(SVGNS, tag); setAttrs(el, attrs); add(el, kids); return el; };
+  const $ = (sel) => document.querySelector(sel);
+  const clear = (el) => { el.replaceChildren(); return el; };
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+  // ================= color =================
+  const hex2rgb = (hex) => { const n = parseInt(hex.replace('#', ''), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
+  const toLin = (c) => { c /= 255; return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; };
+  const fromLin = (c) => Math.round(clamp(c <= 0.0031308 ? 12.92 * c : 1.055 * c ** (1 / 2.4) - 0.055, 0, 1) * 255);
+  function rgb2lab([r, g, b]) {
+    r = toLin(r); g = toLin(g); b = toLin(b);
+    const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+    const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+    const q = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+    return [0.2104542553 * l + 0.793617785 * m - 0.0040720468 * q, 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * q, 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * q];
+  }
+  function lab2hex([L, a, b]) {
+    const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3;
+    const m = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3;
+    const q = (L - 0.0894841775 * a - 1.291485548 * b) ** 3;
+    const rgb = [fromLin(4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * q), fromLin(-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * q), fromLin(-0.0041960863 * l - 0.7034186147 * m + 1.707614701 * q)];
+    return '#' + rgb.map((v) => v.toString(16).padStart(2, '0')).join('');
+  }
+  const mix = (h1, h2, t) => { const A = rgb2lab(hex2rgb(h1)), B = rgb2lab(hex2rgb(h2)); return lab2hex(A.map((v, i) => v + (B[i] - v) * t)); };
+  const lum = (hex) => { const [r, g, b] = hex2rgb(hex).map(toLin); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
+  const inkOn = (hex) => (lum(hex) > 0.179 ? '#0b0b0b' : '#ffffff');
+  const seqColor = (t) => RAMP[Math.round(clamp(t, 0, 1) * (RAMP.length - 1))];
+  function divColor(v, maxAbs) {
+    const t = clamp(v / maxAbs, -1, 1);
+    return t >= 0 ? mix(css('--div-mid'), css('--div-worse'), t) : mix(css('--div-mid'), css('--div-better'), -t);
+  }
+  const rampCss = (stops) => `linear-gradient(90deg, ${stops.join(', ')})`;
+
+  // ================= tooltip =================
+  const tip = $('#tooltip');
+  function showTip(evt, title, rows) {
+    clear(tip);
+    if (title) tip.append(h('div', { class: 'tip-title', text: title }));
+    for (const r of rows) tip.append(h('div', { class: 'tip-row' }, r.color ? h('span', { class: 'tip-key', style: `background:${r.color}` }) : null, h('strong', { text: r.value }), h('span', { class: 'tip-label', text: r.label || '' })));
+    tip.hidden = false;
+    moveTip(evt);
+  }
+  function moveTip(evt) {
+    let x, y;
+    if (evt && typeof evt.clientX === 'number' && (evt.clientX || evt.clientY)) { x = evt.clientX; y = evt.clientY; }
+    else { const r = (evt.currentTarget || evt.target).getBoundingClientRect(); x = r.left + r.width / 2; y = r.top; }
+    const tw = tip.offsetWidth, th = tip.offsetHeight, pad = 14;
+    let left = x + pad, top = y - th - pad;
+    if (left + tw > innerWidth - 8) left = x - tw - pad;
+    if (left < 8) left = 8;
+    if (top < 8) top = y + pad + 6;
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+  }
+  const hideTip = () => { tip.hidden = true; };
+  function bindTip(el, content, hotEl) {
+    const target = hotEl || el;
+    const show = (e) => { const [t, rows] = content(); showTip(e, t, rows); target.classList.add('is-hot'); };
+    const hide = () => { hideTip(); target.classList.remove('is-hot'); };
+    el.addEventListener('pointerenter', show);
+    el.addEventListener('pointermove', moveTip);
+    el.addEventListener('pointerleave', hide);
+    el.addEventListener('focus', show);
+    el.addEventListener('blur', hide);
+  }
+
+  // ================= table view (accessible twin of every chart) =================
+  const openTables = new Set();
+  function tableView(host, id, columns, rows) {
+    const det = h('details', { class: 'table-view' }, h('summary', { text: 'Show as table' }));
+    if (openTables.has(id)) det.open = true;
+    det.addEventListener('toggle', () => (det.open ? openTables.add(id) : openTables.delete(id)));
+    const tbl = h('table', { class: 'data-table' },
+      h('thead', {}, h('tr', {}, columns.map((c) => h('th', { scope: 'col', class: c.num ? 'num' : '', text: c.label })))),
+      h('tbody', {}, rows.map((r) => h('tr', {}, r.map((v, i) => h('td', { class: columns[i].num ? 'num' : '', text: v }))))));
+    det.append(h('div', { class: 'table-scroll' }, tbl));
+    clear(host).append(det);
+  }
+
+  // ================= charts =================
+  function hbar(host, items, opt) {
+    const peak = Math.max(...items.map((d) => Math.max(d.value || 0, d.ref || 0)), 1e-9);
+    const max = opt.max || peak * 1.28;
+    const list = h('div', { class: 'hbar', role: 'list' });
+    for (const d of items) {
+      const w = clamp((d.value / max) * 100, 0, 100);
+      const inside = w > 70;
+      const fill = h('span', { class: 'hbar-fill' + (d.emph === false ? ' is-deemph' : ''), style: `width:${w}%` });
+      const val = h('span', { class: 'hbar-value' + (inside && d.emph !== false ? ' is-inside' : ''), text: opt.fmt(d.value),
+        style: inside ? `right:calc(${100 - w}% + 6px)` : `left:calc(${w}% + 6px)` });
+      const track = h('span', { class: 'hbar-track' }, fill, val);
+      if (Number.isFinite(d.ref)) track.append(h('span', { class: 'hbar-ref', style: `left:${clamp((d.ref / max) * 100, 0, 100)}%` }));
+      const row = h('div', { class: 'hbar-row', role: 'listitem', tabindex: 0, 'aria-label': `${d.label}: ${opt.fmt(d.value)}` },
+        h('span', { class: 'hbar-label', text: d.label }), track);
+      if (d.tip) bindTip(row, () => d.tip);
+      list.append(row);
+    }
+    clear(host).append(list);
+  }
+
+  function divbar(host, items, opt) {
+    const max = opt.max || Math.max(...items.map((d) => Math.abs(d.value)), 1e-9) * 1.45;
+    const list = h('div', { class: 'divbar', role: 'list' });
+    for (const d of items) {
+      const w = clamp((Math.abs(d.value) / max) * 50, 0, 50);
+      const pos = d.value >= 0;
+      const color = d.harmful ? 'var(--div-worse)' : 'var(--div-better)';
+      const track = h('span', { class: 'divbar-track' },
+        h('span', { class: 'divbar-fill ' + (pos ? 'pos' : 'neg'), style: `width:${w}%;background:${color}` }),
+        h('span', { class: 'divbar-value', text: fmtSigned(d.value, 2), style: pos ? `left:calc(${50 + w}% + 6px)` : `right:calc(${50 + w}% + 6px)` }));
+      const row = h('div', { class: 'divbar-row', role: 'listitem', tabindex: 0, 'aria-label': `${d.label}: r = ${fmtSigned(d.value, 2)}` },
+        h('span', { class: 'divbar-label', text: d.label }), track);
+      bindTip(row, () => [d.label, [{ value: 'r = ' + fmtSigned(d.value, 3), label: d.harmful ? 'goes with a worse outcome' : 'goes with a better outcome', color }]]);
+      list.append(row);
+    }
+    list.append(h('div', { class: 'divbar-axis', 'aria-hidden': 'true' }, h('span'),
+      h('span', {}, h('span', { text: fmtSigned(-max, 2) }), h('span', { text: '0' }), h('span', { text: fmtSigned(max, 2) }))));
+    clear(host).append(list);
+  }
+
+  function niceTicks(maxV, count = 4) {
+    const raw = maxV / count, p = 10 ** Math.floor(Math.log10(raw)), f = raw / p;
+    const step = (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * p;
+    const top = Math.ceil(maxV / step - 1e-9) * step;
+    const ticks = [];
+    for (let v = 0; v <= top + step / 2; v += step) ticks.push(+v.toFixed(10));
+    return { top, ticks };
+  }
+  const colPath = (x, y, w, hh, r) => { r = Math.min(r, w / 2, hh); return `M${x},${y + hh}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + hh}Z`; };
+
+  function columnChart(host, bins, opt) {
+    const W = Math.max(280, Math.floor(host.clientWidth || 600)), H = opt.height || 230;
+    const m = { t: 12, r: 10, b: opt.xTitle ? 46 : 30, l: 46 };
+    const iw = W - m.l - m.r, ih = H - m.t - m.b;
+    const { top, ticks } = niceTicks(Math.max(...bins.map((b) => b.value), 1e-9), 4);
+    const y = (v) => m.t + ih - (v / top) * ih;
+    const band = iw / bins.length, bw = Math.max(2, Math.min(24, band - 2));
+    const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', 'aria-label': opt.aria || '' });
+    const g = s('g', { class: 'ax' });
+    for (const t of ticks) {
+      g.append(s('line', { class: t === 0 ? 'baseline' : 'gridline', x1: m.l, x2: W - m.r, y1: y(t), y2: y(t) }));
+      g.append(s('text', { x: m.l - 8, y: y(t), dy: '0.32em', 'text-anchor': 'end', text: opt.yFmt(t) }));
+    }
+    bins.forEach((b, i) => g.append(s('text', { x: m.l + band * i + band / 2, y: m.t + ih + 17, 'text-anchor': 'middle', text: b.label })));
+    if (opt.xTitle) g.append(s('text', { x: m.l + iw / 2, y: H - 6, 'text-anchor': 'middle', text: opt.xTitle }));
+    svg.append(g);
+    bins.forEach((b, i) => {
+      const x = m.l + band * i + (band - bw) / 2, yy = y(b.value), hh = m.t + ih - yy;
+      const bar = s('path', { class: 'col' + (b.emph === false ? ' is-deemph' : ''), d: hh > 0.4 ? colPath(x, yy, bw, hh, 4) : '' });
+      const hit = s('rect', { class: 'hit', x: m.l + band * i, y: m.t, width: band, height: ih, fill: 'transparent', tabindex: 0, 'aria-label': `${b.label}: ${opt.yFmt(b.value)}` });
+      svg.append(bar, hit);
+      bindTip(hit, () => b.tip, bar);
+    });
+    clear(host).append(svg);
+  }
+
+  function heatGrid(host, opt) {
+    const grid = h('div', { class: 'heat' });
+    const colTpl = opt.cols.map((c) => (c.gap ? '10px' : `minmax(${opt.minCol || 62}px, 1fr)`)).join(' ');
+    grid.style.gridTemplateColumns = `minmax(9rem, max-content) ${colTpl}`;
+    grid.append(h('div', { class: 'heat-corner' }));
+    for (const c of opt.cols) grid.append(h('div', { class: 'heat-colhead' + (c.sel ? ' is-sel' : ''), text: c.gap ? '' : c.label, title: c.title || '' }));
+    opt.rows.forEach((r, ri) => {
+      grid.append(h('div', { class: 'heat-rowlabel', text: r.label }));
+      opt.cols.forEach((c, ci) => {
+        if (c.gap) { grid.append(h('div', { class: 'heat-gap' })); return; }
+        const v = opt.value(ri, ci);
+        const bg = opt.color(v, ri, ci);
+        const extra = opt.cellClass ? opt.cellClass(ri, ci) : '';
+        grid.append(h('div', { class: 'heat-cell' + (c.sel ? ' is-sel' : '') + (extra ? ' ' + extra : ''), 'data-r': ri, 'data-c': ci, style: `background:${bg};color:${inkOn(bg)}`, text: opt.fmt(v) }));
+      });
+    });
+    grid.addEventListener('pointermove', (e) => {
+      const cell = e.target.closest('.heat-cell');
+      if (!cell) { hideTip(); return; }
+      const [t, rows] = opt.tip(+cell.dataset.r, +cell.dataset.c);
+      showTip(e, t, rows);
+    });
+    grid.addEventListener('pointerleave', hideTip);
+    clear(host).append(h('div', { class: 'table-scroll' }, grid));
+  }
+
+  function rampLegend(host, stops, lo, hi, extra) {
+    clear(host).append(h('span', { text: lo }), h('span', { class: 'sw-ramp', style: `width:140px;background:${rampCss(stops)}` }), h('span', { text: hi }));
+    if (extra) host.append(extra);
+  }
+
+  // Dot plot: one row per problem score, one labelled dot per group; colour = worse / better / near average.
+  function dotPlot(host, rows, series, opt) {
+    const W = Math.max(300, Math.floor(host.clientWidth || 560));
+    const labelW = Math.min(150, W * 0.3), rowH = 26 + series.length * 14;
+    const m = { t: 8, r: 34, b: 34, l: labelW };
+    const iw = W - m.l - m.r, H = m.t + rows.length * rowH + m.b;
+    const x = (v) => m.l + ((clamp(v, -opt.lim, opt.lim) + opt.lim) / (2 * opt.lim)) * iw;
+    const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', 'aria-label': opt.aria || '' });
+    const g = s('g', { class: 'ax' });
+    g.append(s('rect', { class: 'band', x: x(-NAME_Z), y: m.t, width: x(NAME_Z) - x(-NAME_Z), height: rows.length * rowH }));
+    for (const t of opt.ticks) {
+      g.append(s('line', { class: t === 0 ? 'baseline' : 'gridline', x1: x(t), x2: x(t), y1: m.t, y2: m.t + rows.length * rowH }));
+      g.append(s('text', { x: x(t), y: m.t + rows.length * rowH + 16, 'text-anchor': 'middle', text: fmtSigned(t, 1) }));
+    }
+    g.append(s('text', { x: m.l, y: H - 2, 'text-anchor': 'start', text: '← better than average' }));
+    g.append(s('text', { x: m.l + iw, y: H - 2, 'text-anchor': 'end', text: 'worse than average →' }));
+    rows.forEach((r, ri) => {
+      const cy = m.t + ri * rowH + rowH / 2;
+      g.append(s('text', { class: 'row-label', x: m.l - 12, y: cy, dy: '0.32em', 'text-anchor': 'end', text: r }));
+      if (ri) g.append(s('line', { class: 'gridline', x1: m.l, x2: m.l + iw, y1: m.t + ri * rowH, y2: m.t + ri * rowH }));
+    });
+    svg.append(g);
+    const n = series.length;
+    rows.forEach((r, ri) => {
+      series.forEach((se, si) => {
+        const v = se.values[ri];
+        const cy = m.t + ri * rowH + 13 + si * 14 + (rowH - 26 - (n - 1) * 14) / 2;
+        const color = v >= NAME_Z ? 'var(--div-worse)' : v <= -NAME_Z ? 'var(--div-better)' : 'var(--deemph)';
+        const dot = s('circle', { class: 'dot', cx: x(v), cy, r: 5.5, style: `fill:${color}` });
+        const txt = s('text', { class: 'dot-label', x: x(v) + 9, y: cy, dy: '0.34em', text: se.name });
+        const hit = s('circle', { class: 'hit', cx: x(v), cy, r: 12, fill: 'transparent', tabindex: 0, 'aria-label': `${se.name}, ${r}: ${fmtSigned(v, 2)} SD` });
+        svg.append(dot, txt, hit);
+        bindTip(hit, () => [`${se.name} · ${r}`, [{ value: fmtSigned(v, 2) + ' SD', label: v > 0 ? 'worse than all employees' : 'better than all employees', color }]], dot);
+      });
+    });
+    clear(host).append(svg);
+  }
+
+  const STATUS_ICON = {
+    low: 'M3.5 8.5l3 3 6-6.5',
+    high: 'M8 12.5V4M4.5 7.5 8 4l3.5 3.5',
+    vhigh: 'M5 12V7.5M5 7.5 2.5 10M5 7.5 7.5 10M11 12V4M11 4 8.5 6.5M11 4l2.5 2.5',
+  };
+  const pill = (status, text) => h('span', { class: `pill st-${status}` },
+    s('svg', { viewBox: '0 0 16 16', 'aria-hidden': 'true' }, s('path', { d: STATUS_ICON[status], fill: 'none', stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })),
+    h('span', { text }));
+  const badge = (code) => h('span', { class: 'code-badge', text: code });
+
+  // ================= state =================
+  const TABS = ['issues', 'segments', 'risk', 'actions'];
+  const state = { seg: -1, occ: -1, wm: -1, level: Math.max(0, LEVELS.indexOf(S.focus_level)), tab: 'issues' };
+  const owFiltered = () => state.occ >= 0 || state.wm >= 0;
+  const isFiltered = () => state.tab === 'risk' || (state.seg >= 0) || owFiltered();
+  const POP = aggregate(() => true);
+  const inOW = (s_, o, w) => (state.occ < 0 || o === state.occ) && (state.wm < 0 || w === state.wm);
+  const levelName = () => LEVELS[state.level];
+  const levelIds = () => LEVEL_SEGS[levelName()].map((sg) => sg.segment_id);
+
+  function scopeLabel(includeSeg) {
+    const parts = [];
+    if (includeSeg && state.tab === 'risk') parts.push(`${levelName()} risk level`);
+    else if (includeSeg && state.seg >= 0) parts.push(SEG_OF[state.seg].code);
+    if (state.occ >= 0) parts.push(OCC[state.occ]);
+    if (state.wm >= 0) parts.push(WM[state.wm]);
+    return parts.length ? parts.join(' · ') : 'All data';
+  }
+
+  // ================= static sections =================
+  function renderStatic() {
+    for (const [dt, dd] of [['Employees', fmtN(D.meta.n_rows)], ['Employee groups', String(NSEG)], ['Risk levels', String(LEVELS.length)]]) $('#facts').append(h('div', {}, h('dt', { text: dt }), h('dd', { text: dd })));
+    renderInsights();
+    renderMethod();
+    $('#actions-intro').textContent = 'Groups are ordered by priority. Risk score = how far burnout is above average plus how far productivity is below average, in standard deviations; high productivity does not cancel out high burnout. The actions are hypotheses to test, then measure again with the same indicators.';
+    for (const c of [
+      'The data is synthetic (the Kaggle author says so). The input factors are almost unrelated to each other, which is rare in real data. Re-run the process on real HR data before making decisions.',
+      'Correlation is not causation. For example, emotional exhaustion goes with burnout, but this snapshot data cannot show which comes first.',
+      `A silhouette score of ${fmtN(S.silhouette, 2)} means there are no natural clusters. The six groups are a practical way to divide the risk space; people near a border may share traits of two groups.`,
+      'Correlations inside a group can change sign because of how the groups were formed (a selection effect). Only use factors that keep the same direction in every group.',
+      'Warning-sign thresholds (for example, sleep under 6 hours or stress of 8+) are analysis choices and can be adjusted to company policy.',
+      'Pilot each action with a comparison group and measure burnout and productivity again after one or two quarters.',
+    ]) $('#caveats').append(h('li', { text: c }));
+    $('#footer').append(
+      h('p', {}, 'Source: ', h('code', { text: D.meta.file_name }), ` (Kaggle, synthetic data) · ${fmtN(D.meta.n_rows)} rows · built ${D.meta.generated}.`),
+      h('p', { text: 'Every number under a filter is recalculated exactly from a 6 group × 7 occupation × 3 work-mode summary cube. Correlations use median-filled values (2% of four columns). Data description is in the notebook.' }),
+      h('p', {}, 'Rebuild: run the notebook ', h('code', { text: 'project_employee performance analysis.ipynb' }), ' → ', h('code', { text: 'python src/build_report_html.py' }), ' → ', h('code', { text: 'python src/build_report_excel.py' })));
+  }
+
+  function renderInsights() {
+    const topR = (out, n) => DRIVERS.map((k) => ({ k, r: corr(POP, k, out) })).sort((a, b) => b.r - a.r).slice(0, n);
+    const nameR = (list) => list.map((d) => `${short(d.k).toLowerCase()} (r ${fmtSigned(d.r, 2)})`).join(', ');
+    const flagsSorted = D.flags.map((f) => ({ f, r: rate(POP, f) })).filter((d) => d.f !== FLAG_BURN && d.f !== FLAG_LOW).sort((a, b) => b.r - a.r);
+    const spreadBy = (isOcc) => {
+      const vals = (isOcc ? OCC : WM).map((_, i) => mean(aggregate((s_, o, w) => (isOcc ? o : w) === i), 'burnout_risk'));
+      return Math.max(...vals) - Math.min(...vals);
+    };
+    const items = [
+      ['Two outcomes, two sets of factors', ['Burnout risk goes with ', h('strong', { text: nameR(topR('burnout_risk', 3)) }), '. Productivity goes with ', h('strong', { text: nameR(topR('productivity_score', 3)) }), '. Reducing burnout is unlikely to raise productivity on its own, and the reverse.']],
+      ['Most common problems', [`${fmtPct(flagsSorted[0].r, 0)} of employees report `, h('strong', { text: flagsSorted[0].f.toLowerCase() }), `, ${fmtPct(flagsSorted[1].r, 0)} `, h('strong', { text: flagsSorted[1].f.toLowerCase() }), `, and about ${fmtPct(flagsSorted[2].r, 0)} `, h('strong', { text: flagsSorted[2].f.toLowerCase() }), '.']],
+      ['Problems add up', ['On average each employee has ', h('strong', { text: `${fmtN(avgFlags(POP), 1)} of ${F} warning signs` }), '; ', h('strong', { text: fmtPct(shareAtLeast(POP, 4), 1) }), ` have 4 or more. ${fmtPct(rate(POP, FLAG_BURN), 1)} have a burnout risk of 70 or more.`]],
+      ['Not a job-title issue', ['Average burnout differs by only ', h('strong', { text: `${fmtN(spreadBy(true), 2)} points` }), ' across occupations and ', h('strong', { text: `${fmtN(spreadBy(false), 2)} points` }), ' across work modes (out of 100). The differences are in individual behaviour, so groups are based on behaviour.']],
+    ];
+    for (const [title, body] of items) $('#insights').append(h('div', { class: 'insight' }, h('h3', { text: title }), h('p', {}, body)));
+  }
+
+  function renderMethod() {
+    const K = S.k;
+    const kRow = S.k_table.find((r) => r.k === K);
+    const steps = [
+      ['25 measures', 'screen time, sleep, deep work, stress, motivation…'],
+      ['5 problem scores', Object.values(S.index_labels).join(', ')],
+      ['Weighted by impact', 'scores linked more strongly to burnout and productivity count more'],
+      [`k = ${K} groups`, 'most stable (ARI ≥ 0.8) and best outcome separation among k = 3–6'],
+      ['K-Means on 5 million', 'checked against Gaussian Mixture and Ward clustering'],
+    ];
+    for (const [t, d] of steps) $('#steps').append(h('li', {}, h('strong', { text: t }), h('span', { text: d })));
+    const metrics = [
+      [fmtN(kRow.stability, 2), 'Stability across 5 runs (ARI)'],
+      [fmtN(S.ari_sample_vs_full, 2), '300k sample vs full data (ARI)'],
+      [fmtN(S.ari_gmm, 2), 'K-Means vs Gaussian Mixture (ARI)'],
+      [fmtN(S.ari_ward, 2), 'K-Means vs Ward (ARI)'],
+      [fmtN(S.silhouette, 2), 'Silhouette (low: no natural clusters)'],
+      [`${fmtPct(S.eta2.productivity_score, 0)} / ${fmtPct(S.eta2.burnout_risk, 0)}`, 'Variation in productivity / burnout explained by group (eta²)'],
+    ];
+    for (const [v, l] of metrics) $('#metrics').append(h('div', { class: 'metric' }, h('span', { class: 'v', text: v }), h('span', { class: 'l', text: l })));
+    $('#method-note').append(
+      h('strong', { text: 'How to read this. ' }),
+      `The five scores are almost unrelated to each other, so the data has no separate clusters and a low silhouette is expected. With equal weights, K-Means gives different answers on different runs (ARI only ${fmtN(kRow.stability_equal, 2)}). `
+      + `Weighting the scores by their link to the outcomes makes the groups reproducible (ARI ${fmtN(kRow.stability, 2)}). Ward agrees less: the core of each group is stable, while the borders between groups are a choice.`);
+  }
+
+  // ================= KPI row =================
+  function renderKPIs(A) {
+    const f = isFiltered();
+    const tiles = [
+      { l: 'Employees in view', v: A.n, fmt: (v) => { const [n, u] = compactParts(v); return [n, h('span', { class: 'kpi-unit', text: u })]; }, sub: f ? `${fmtPct(A.n / POP.n, 1)} of all` : 'All data' },
+      { l: 'Average burnout risk', v: mean(A, 'burnout_risk'), p: mean(POP, 'burnout_risk'), fmt: (v) => fmtN(v, 1), df: (d) => fmtSigned(d, 1), bad: 1, sub: 'Scale 0–100' },
+      { l: 'Burnout risk 70+', v: rate(A, FLAG_BURN), p: rate(POP, FLAG_BURN), fmt: fmtPct, df: (d) => fmtSigned(d * 100, 1) + ' pp', bad: 1, sub: 'Share of employees' },
+      { l: 'Average productivity', v: mean(A, 'productivity_score'), p: mean(POP, 'productivity_score'), fmt: (v) => fmtN(v, 1), df: (d) => fmtSigned(d, 1), bad: -1, sub: 'Scale 0–100' },
+      { l: 'Low productivity category', v: rate(A, FLAG_LOW), p: rate(POP, FLAG_LOW), fmt: fmtPct, df: (d) => fmtSigned(d * 100, 1) + ' pp', bad: 1, sub: 'Share of employees' },
+      { l: 'Warning signs per person', v: avgFlags(A), p: avgFlags(POP), fmt: (v) => fmtN(v, 2), df: (d) => fmtSigned(d, 2), bad: 1, sub: `Out of ${F}` },
+    ];
+    const host = clear($('#kpis'));
+    for (const t of tiles) {
+      const tile = h('div', { class: 'kpi' }, h('p', { class: 'kpi-label', text: t.l }), h('p', { class: 'kpi-value' }, t.fmt(t.v)));
+      if (f && t.p !== undefined) {
+        const d = t.v - t.p;
+        const flat = Math.abs(d) < (t.fmt === fmtPct ? 0.0005 : 0.05);
+        const cls = flat ? 'is-flat' : (d > 0) === (t.bad > 0) ? 'is-bad' : 'is-good';
+        tile.append(h('p', { class: `kpi-delta ${cls}`, text: `${flat ? '●' : d > 0 ? '▲' : '▼'} ${t.df(d)} vs all employees` }));
+      } else tile.append(h('p', { class: 'kpi-sub', text: t.sub }));
+      host.append(tile);
+    }
+    const scope = clear($('#scope'));
+    if (f) scope.append('Showing ', h('strong', { text: scopeLabel(true) }), ` · ${fmtN(A.n)} employees.`);
+    else scope.append('Showing ', h('strong', { text: 'all 5 million employees' }), '.');
+    if (state.tab === 'segments' || state.tab === 'actions') scope.append(' This sheet compares all groups; the selected group is highlighted.');
+    for (const el of document.querySelectorAll('[data-scope]')) el.textContent = f ? scopeLabel(true) : 'All data';
+    for (const el of document.querySelectorAll('[data-scope-ow]')) el.textContent = owFiltered() ? scopeLabel(false) : 'All data';
+  }
+
+  // ================= SHEET 1: problems =================
+  const FLAG_ORDER = D.flags.map((f) => ({ f, r: rate(POP, f) })).sort((a, b) => b.r - a.r).map((d) => d.f);
+  const CORR_ORDER = {};
+  for (const out of OUTCOMES) CORR_ORDER[out] = DRIVERS.map((k) => ({ k, r: corr(POP, k, out) })).filter((d) => Math.abs(d.r) >= 0.05).sort((a, b) => b.r - a.r).map((d) => d.k);
+
+  function renderIssues(A) {
+    const f = isFiltered();
+    for (const [out, host, tv, harmfulIfPositive] of [['burnout_risk', '#corr-burn', '#corr-burn-tv', true], ['productivity_score', '#corr-prod', '#corr-prod-tv', false]]) {
+      const items = CORR_ORDER[out].map((k) => { const r = corr(A, k, out); return { label: label(k), value: r, harmful: harmfulIfPositive ? r > 0 : r < 0 }; });
+      divbar($(host), items, { max: 0.8 });
+      tableView($(tv), 'corr-' + out, [{ label: 'Factor' }, { label: 'r with burnout', num: 1 }, { label: 'r with productivity', num: 1 }],
+        DRIVERS.map((k) => [label(k), fmtSigned(corr(A, k, 'burnout_risk'), 3), fmtSigned(corr(A, k, 'productivity_score'), 3)]));
+    }
+    hbar($('#flags-chart'), FLAG_ORDER.map((fl) => ({ label: fl, value: rate(A, fl), ref: f ? rate(POP, fl) : undefined,
+      tip: [fl, [{ value: fmtPct(rate(A, fl), 1), label: 'in view' }, { value: fmtN(A.flags[FIX[fl]]), label: 'employees' }, { value: fmtPct(rate(POP, fl), 1), label: 'all employees' }]] })), { fmt: (x) => fmtPct(x, 1), max: 1 });
+    tableView($('#flags-tv'), 'flags', [{ label: 'Warning sign' }, { label: 'Employees', num: 1 }, { label: '% in view', num: 1 }, { label: '% all', num: 1 }],
+      FLAG_ORDER.map((fl) => [fl, fmtN(A.flags[FIX[fl]]), fmtPct(rate(A, fl), 2), fmtPct(rate(POP, fl), 2)]));
+
+    $('#nfl-sub').textContent = `On average ${fmtN(avgFlags(A), 2)} warning signs per employee; ${fmtPct(shareAtLeast(A, 4), 1)} have 4 or more.`;
+    const nb = Array.from(A.nfl, (c, k) => ({ label: String(k), value: A.n ? c / A.n : 0, emph: k >= 4,
+      tip: [`${k} warning signs`, [{ value: fmtPct(A.n ? c / A.n : 0, 1), label: 'of employees' }, { value: fmtN(c), label: 'people' }]] }));
+    columnChart($('#nfl-chart'), nb, { yFmt: (t) => fmtPct(t, 0), xTitle: `Warning signs per employee (out of ${F})`, aria: 'Distribution of warning signs per employee' });
+    tableView($('#nfl-tv'), 'nfl', [{ label: 'Warning signs' }, { label: 'Employees', num: 1 }, { label: '% of employees', num: 1 }], nb.map((b, k) => [b.label, fmtN(A.nfl[k]), fmtPct(b.value, 2)]));
+  }
+
+  // ================= SHEET 2: groups =================
+  const segStats = (G, OW) => ({ n: G.n, share: OW.n ? G.n / OW.n : NaN, b: mean(G, 'burnout_risk'), p: mean(G, 'productivity_score'), fl: avgFlags(G) });
+
+  function renderSegments(A, OW, BYSEG) {
+    const tbl = clear($('#seg-table'));
+    const cols = ['Code', 'Group', 'Risk level', 'Share', 'Employees', 'Burnout avg', 'Productivity avg', 'Warning signs / person'];
+    tbl.append(h('thead', {}, h('tr', {}, cols.map((c, i) => h('th', { scope: 'col', class: i >= 3 ? 'num' : '', text: c })))));
+    const tb = h('tbody');
+    for (const sg of SEG) {
+      const st = segStats(BYSEG[sg.segment_id], OW);
+      const tr = h('tr', { class: state.seg === sg.segment_id ? 'is-sel' : '', tabindex: 0, 'aria-selected': state.seg === sg.segment_id },
+        h('td', { class: 'code', text: sg.code }), h('td', { class: 'seg-name', text: sg.name }), h('td', {}, pill(sg.status, sg.level)),
+        h('td', { class: 'num', text: fmtPct(st.share, 1) }), h('td', { class: 'num', text: fmtN(st.n) }), h('td', { class: 'num', text: fmtN(st.b, 1) }),
+        h('td', { class: 'num', text: fmtN(st.p, 1) }), h('td', { class: 'num', text: fmtN(st.fl, 2) }));
+      tr.addEventListener('click', () => selectSegment(sg.segment_id));
+      tr.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectSegment(sg.segment_id); } });
+      tb.append(tr);
+    }
+    const all = segStats(OW, OW);
+    tb.append(h('tr', { style: 'cursor:default' }, h('td', { class: 'code', text: '—' }), h('td', { class: 'seg-name', text: 'All groups' }), h('td'),
+      h('td', { class: 'num', text: '100%' }), h('td', { class: 'num', text: fmtN(all.n) }), h('td', { class: 'num', text: fmtN(all.b, 1) }), h('td', { class: 'num', text: fmtN(all.p, 1) }), h('td', { class: 'num', text: fmtN(all.fl, 2) })));
+    tbl.append(tb);
+
+    const segCols = SEG.map((sg) => ({ label: sg.code, title: sg.name, sel: state.seg === sg.segment_id, agg: BYSEG[sg.segment_id] })).concat([{ label: 'All', title: 'All groups', agg: OW }]);
+    const PLIM = 1.2;
+    rampLegend($('#prob-legend'), [-1, -0.5, 0, 0.5, 1].map((t) => divColor(t * PLIM, PLIM)), `${fmtSigned(-PLIM, 1)} SD better`, `${fmtSigned(PLIM, 1)} SD worse`);
+    heatGrid($('#prob-heat'), {
+      rows: IDX.map((c) => ({ label: S.problem_labels[c] })), cols: segCols,
+      value: (ri, ci) => idxMean(segCols[ci].agg, ri), color: (v) => divColor(v, PLIM), fmt: (v) => fmtSigned(v, 2),
+      tip: (ri, ci) => [`${segCols[ci].title} · ${S.problem_labels[IDX[ri]]}`, [{ value: fmtSigned(idxMean(segCols[ci].agg, ri), 2) + ' SD', label: idxMean(segCols[ci].agg, ri) > 0 ? 'worse than average' : 'better than average' }]],
+    });
+    tableView($('#prob-heat-tv'), 'prob', [{ label: 'Score' }, ...segCols.map((c) => ({ label: c.label, num: 1 }))], IDX.map((c, ri) => [S.problem_labels[c], ...segCols.map((col) => fmtSigned(idxMean(col.agg, ri), 3))]));
+
+    const host = clear($('#dens'));
+    $('#dens-ramp').style.background = rampCss(RAMP);
+    const grid = h('div', { class: 'dens-grid' });
+    host.append(grid);
+    const maxShare = Math.max(...SEG.map((sg) => { const G = BYSEG[sg.segment_id]; return G.n ? Math.max(...G.o2) / G.n : 0; }), 1e-9);
+    const popB = mean(OW, 'burnout_risk'), popP = mean(OW, 'productivity_score');
+    const denseRows = [];
+    for (const sg of SEG) {
+      const G = BYSEG[sg.segment_id], st = segStats(G, OW);
+      const chart = h('div', { class: 'chart' });
+      const panel = h('div', { class: 'dens' + (state.seg === sg.segment_id ? ' is-sel' : ''), role: 'button', tabindex: 0, 'aria-pressed': state.seg === sg.segment_id, 'aria-label': `${sg.code} ${sg.name}. Select this group.` },
+        h('div', { class: 'dens-head' }, h('p', { class: 'dens-title', text: `${sg.code} · ${sg.name}` }), pill(sg.status, sg.level)),
+        h('p', { class: 'dens-meta', text: `Burnout ${fmtN(st.b, 1)} · Productivity ${fmtN(st.p, 1)} · ${fmtPct(st.share, 1)}` }), chart);
+      panel.addEventListener('click', () => selectSegment(sg.segment_id));
+      panel.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectSegment(sg.segment_id); } });
+      grid.append(panel);
+      densityChart(chart, G, sg, { maxShare, popB, popP, b: st.b, p: st.p });
+      denseRows.push([`${sg.code} · ${sg.name}`, fmtN(st.b, 1), fmtN(st.p, 1), fmtPct(G.n ? topLeftShare(G) : NaN, 1)]);
+    }
+    tableView($('#dens-tv'), 'dens', [{ label: 'Group' }, { label: 'Burnout avg', num: 1 }, { label: 'Productivity avg', num: 1 }, { label: '% with burnout 70+ and productivity < 50', num: 1 }], denseRows);
+
+    const fmax = Math.max(...FLAG_ORDER.map((fl) => Math.max(...segCols.map((c) => rate(c.agg, fl)))));
+    rampLegend($('#flag-legend'), RAMP, '0%', fmtPct(fmax, 0));
+    heatGrid($('#flag-heat'), {
+      rows: FLAG_ORDER.map((fl) => ({ label: fl })), cols: segCols,
+      value: (ri, ci) => rate(segCols[ci].agg, FLAG_ORDER[ri]), color: (v) => seqColor(v / fmax), fmt: (v) => fmtPct(v, 0),
+      tip: (ri, ci) => { const fl = FLAG_ORDER[ri], v = rate(segCols[ci].agg, fl), base = rate(OW, fl); return [`${segCols[ci].title} · ${fl}`, [{ value: fmtPct(v, 1), label: 'of the group' }, { value: fmtSigned((v - base) * 100, 1) + ' pp', label: 'vs all groups' }]]; },
+    });
+    tableView($('#flag-heat-tv'), 'flagheat', [{ label: 'Warning sign' }, ...segCols.map((c) => ({ label: c.label, num: 1 }))], FLAG_ORDER.map((fl) => [fl, ...segCols.map((c) => fmtPct(rate(c.agg, fl), 1))]));
+  }
+
+  function topLeftShare(G) {
+    let s_ = 0;
+    const b0 = Math.round(70 / (100 / OB)), p1 = Math.round(50 / (100 / OB));
+    for (let b = b0; b < OB; b++) for (let p = 0; p < p1; p++) s_ += G.o2[b * OB + p];
+    return s_ / G.n;
+  }
+
+  function densityChart(host, G, sg, o) {
+    const W = Math.max(220, Math.floor(host.clientWidth || 260));
+    const m = { t: 6, r: 8, b: 30, l: 34 };
+    const size = W - m.l - m.r, H = size + m.t + m.b, cw = size / OB;
+    const px = (v) => m.l + (v / 100) * size, py = (v) => m.t + (1 - v / 100) * size;
+    const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', 'aria-label': `Density of ${sg.code} on the burnout and productivity map` });
+    svg.append(s('rect', { x: m.l, y: m.t, width: size, height: size, fill: 'var(--surface-2)', rx: 3 }));
+    for (let b = 0; b < OB; b++) for (let p = 0; p < OB; p++) {
+      const c = G.o2[b * OB + p];
+      if (!c) continue;
+      svg.append(s('rect', { x: m.l + p * cw + 0.5, y: m.t + (OB - 1 - b) * cw + 0.5, width: Math.max(0.5, cw - 1), height: Math.max(0.5, cw - 1), fill: seqColor(c / G.n / o.maxShare) }));
+    }
+    const g = s('g', { class: 'ax' });
+    for (const t of [0, 50, 100]) {
+      g.append(s('text', { x: px(t), y: m.t + size + 14, 'text-anchor': t === 0 ? 'start' : t === 100 ? 'end' : 'middle', text: String(t) }));
+      g.append(s('text', { x: m.l - 6, y: py(t), dy: '0.32em', 'text-anchor': 'end', text: String(t) }));
+    }
+    g.append(s('text', { x: m.l + size / 2, y: H - 2, 'text-anchor': 'middle', text: 'Productivity →' }));
+    g.append(s('text', { x: 10, y: m.t + size / 2, 'text-anchor': 'middle', transform: `rotate(-90 10 ${m.t + size / 2})`, text: 'Burnout →' }));
+    svg.append(g);
+    svg.append(s('line', { class: 'ref-line', x1: px(o.popP), x2: px(o.popP), y1: m.t, y2: m.t + size }));
+    svg.append(s('line', { class: 'ref-line', x1: m.l, x2: m.l + size, y1: py(o.popB), y2: py(o.popB) }));
+    svg.append(s('circle', { cx: px(o.p), cy: py(o.b), r: 5, fill: 'var(--ink)', stroke: 'var(--surface)', 'stroke-width': 2 }));
+    const overlay = s('rect', { x: m.l, y: m.t, width: size, height: size, fill: 'transparent' });
+    overlay.addEventListener('pointermove', (e) => {
+      const r = svg.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width) * W, y = ((e.clientY - r.top) / r.height) * H;
+      const p = clamp(Math.floor((x - m.l) / cw), 0, OB - 1), b = clamp(OB - 1 - Math.floor((y - m.t) / cw), 0, OB - 1);
+      const c = G.o2[b * OB + p], step = 100 / OB;
+      showTip(e, `${sg.code} · burnout ${fmtN(b * step)}–${fmtN((b + 1) * step)}, productivity ${fmtN(p * step)}–${fmtN((p + 1) * step)}`,
+        [{ value: fmtPct(G.n ? c / G.n : 0, 2), label: 'of the group' }, { value: fmtN(c), label: 'people' }]);
+    });
+    overlay.addEventListener('pointerleave', hideTip);
+    svg.append(overlay);
+    clear(host).append(svg);
+  }
+
+  // ================= SHEET 3: groups within a risk level =================
+  const MIN_FLIP = 0.05, MIN_LEVER = 0.10;
+  const isFlip = (r, ref) => Math.abs(r) >= MIN_FLIP && (Math.abs(ref) < 0.005 || Math.sign(r) !== Math.sign(ref));
+  const harmOf = (out, r) => (out === 'burnout_risk' ? r : -r);
+  const mainIssue = (sg) => (sg.problems.length ? sg.problems.map((p) => p.text).join(' and ') : sg.strengths.length ? `no major problem; strength: ${sg.strengths[0].text}` : 'close to average');
+
+  function renderRisk(A, OW) {
+    const L = levelName(), groups = LEVEL_SEGS[L];
+    const G = groups.map((sg) => ({ sg, agg: aggregate((s_, o, w) => s_ === sg.segment_id && inOW(s_, o, w)) }));
+    const refB = mean(OW, 'burnout_risk'), refP = mean(OW, 'productivity_score');
+    $('#risk-title').textContent = groups.length > 1 ? `"${L}" risk level: same level, different causes` : `"${L}" risk level compared with all employees`;
+
+    const tk = clear($('#risk-takeaway'));
+    const share = OW.n ? A.n / OW.n : NaN;
+    if (groups.length > 1) {
+      tk.append(`The "${L}" level has ${groups.length} groups, `, h('strong', { text: fmtPct(share, 1) }), ' of employees in view, but the main problem differs: ');
+      G.forEach((g, i) => {
+        const b = mean(g.agg, 'burnout_risk'), p = mean(g.agg, 'productivity_score');
+        const notes = [];
+        if (b - refB >= 3) notes.push(`burnout above average (${fmtN(b, 1)})`);
+        if (refP - p >= 3) notes.push(`productivity below average (${fmtN(p, 1)})`);
+        if (!notes.length && p - refP >= 3) notes.push(`productivity above average (${fmtN(p, 1)})`);
+        tk.append(h('strong', { text: g.sg.code }), ` ${mainIssue(g.sg)}${notes.length ? ', with ' + notes.join(' and ') : ''}`, i < G.length - 1 ? '; ' : '. ');
+      });
+      const kinds = new Set(G.map((g) => (g.sg.problems[0] || {}).index).filter(Boolean));
+      tk.append(kinds.size > 1
+        ? 'A single programme for the whole level would fit only some of these groups; each group needs support that matches its own main problem.'
+        : kinds.size === 1 ? 'The groups share the same main problem, so one core programme can serve them.'
+          : 'Both groups are low risk but for different reasons, so each can mentor others on the habit it is strong in.');
+    } else {
+      const g = G[0];
+      tk.append(`The "${L}" level has only `, h('strong', { text: `${g.sg.code} · ${g.sg.name}` }), ` (${fmtPct(share, 1)} of employees in view), so this sheet compares it with all employees. Burnout ${fmtN(mean(g.agg, 'burnout_risk'), 1)} (average ${fmtN(refB, 1)}), productivity ${fmtN(mean(g.agg, 'productivity_score'), 1)} (average ${fmtN(refP, 1)}).`);
+    }
+
+    const tiles = clear($('#risk-tiles'));
+    for (const g of G) {
+      const b = mean(g.agg, 'burnout_risk'), p = mean(g.agg, 'productivity_score');
+      const dEl = (d, badUp) => { const cls = Math.abs(d) < 0.05 ? 'is-flat' : (d > 0) === badUp ? 'is-bad' : 'is-good'; return h('span', { class: `d ${cls}`, text: `${d > 0 ? '▲' : d < 0 ? '▼' : '●'} ${fmtSigned(d, 1)}` }); };
+      tiles.append(h('div', { class: 'gtile' },
+        h('div', { class: 'gtile-head' }, badge(g.sg.code), h('h3', { text: g.sg.name }), h('p', { class: 'gsub', text: `${fmtPct(A.n ? g.agg.n / A.n : NaN, 0)} of this level · ${fmtCompact(g.agg.n)} people` })),
+        h('div', { class: 'minis' },
+          h('div', { class: 'mini' }, h('span', { class: 'l', text: 'Burnout avg' }), h('span', { class: 'v', text: fmtN(b, 1) }), dEl(b - refB, true)),
+          h('div', { class: 'mini' }, h('span', { class: 'l', text: 'Productivity avg' }), h('span', { class: 'v', text: fmtN(p, 1) }), dEl(p - refP, false)),
+          h('div', { class: 'mini' }, h('span', { class: 'l', text: 'Warning signs' }), h('span', { class: 'v', text: fmtN(avgFlags(g.agg), 2) }), dEl(avgFlags(g.agg) - avgFlags(OW), true))),
+        h('div', {}, h('h4', { text: 'Main problems and strengths' }), h('div', { class: 'chips' },
+          g.sg.problems.map((pr) => h('span', { class: 'chip worse' }, pr.text, h('span', { class: 'z', text: `${fmtSigned(idxMean(g.agg, IDX.indexOf(pr.index)), 2)} SD` }))),
+          g.sg.strengths.map((pr) => h('span', { class: 'chip better' }, pr.text, h('span', { class: 'z', text: `${fmtSigned(idxMean(g.agg, IDX.indexOf(pr.index)), 2)} SD` })))))));
+    }
+
+    const series = G.map((g) => ({ name: g.sg.code, values: IDX.map((_, j) => idxMean(g.agg, j)) }));
+    dotPlot($('#risk-dots'), IDX.map((c) => S.problem_labels[c]), series, { lim: 1.4, ticks: [-1, -0.5, 0, 0.5, 1], aria: `Problem profile of the groups at the ${L} level` });
+    tableView($('#risk-dots-tv'), 'riskdots', [{ label: 'Score' }, ...G.map((g) => ({ label: g.sg.code, num: 1 }))], IDX.map((c, j) => [S.problem_labels[c], ...G.map((g) => fmtSigned(idxMean(g.agg, j), 3))]));
+
+    const metrics = [
+      { l: 'Burnout avg', f: (X) => mean(X, 'burnout_risk'), fmt: (v) => fmtN(v, 1), dir: 1, scale: 12 },
+      { l: 'Burnout risk 70+', f: (X) => rate(X, FLAG_BURN), fmt: (v) => fmtPct(v, 1), dir: 1, scale: 0.15 },
+      { l: 'Productivity avg', f: (X) => mean(X, 'productivity_score'), fmt: (v) => fmtN(v, 1), dir: -1, scale: 15 },
+      { l: 'Low productivity', f: (X) => rate(X, FLAG_LOW), fmt: (v) => fmtPct(v, 1), dir: 1, scale: 0.25 },
+      { l: 'Warning signs / person', f: avgFlags, fmt: (v) => fmtN(v, 2), dir: 1, scale: 1.5 },
+    ];
+    const ot = clear($('#risk-outcomes'));
+    ot.append(h('thead', {}, h('tr', {}, h('th', { scope: 'col', text: 'Measure' }), G.map((g) => h('th', { scope: 'col', class: 'gh' }, badge(g.sg.code))), h('th', { scope: 'col', class: 'num', text: 'All' }))));
+    ot.append(h('tbody', {}, metrics.map((mt) => {
+      const ref = mt.f(OW);
+      return h('tr', {}, h('td', { text: mt.l }), G.map((g) => {
+        const v = mt.f(g.agg), bg = divColor((v - ref) * mt.dir, mt.scale);
+        return h('td', { class: 'hc', style: `background:${bg};color:${inkOn(bg)}`, text: mt.fmt(v), title: `${mt.l}: ${mt.fmt(v)} (all employees ${mt.fmt(ref)})` });
+      }), h('td', { class: 'num', text: mt.fmt(ref) }));
+    })));
+
+    const beh = DRIVERS.map((k) => {
+      const ref = mean(OW, k), sdv = sd(OW, k), vals = G.map((g) => mean(g.agg, k));
+      const zs = vals.map((v) => (v - ref) / sdv);
+      return { k, ref, vals, zs, spread: G.length > 1 ? Math.max(...zs) - Math.min(...zs) : Math.abs(zs[0]) };
+    }).sort((a, b) => b.spread - a.spread);
+    const maxSpread = Math.max(...beh.map((r) => r.spread), 1e-9);
+    const BLIM = 1.0;
+    rampLegend($('#risk-beh-legend'), [-1, -0.5, 0, 0.5, 1].map((t) => divColor(t * BLIM, BLIM)), 'better than all employees', 'worse', h('span', { style: 'margin-left:10px', text: '· grey: neutral factors (meetings, remote days)' }));
+    const bt = clear($('#risk-behaviour'));
+    bt.append(h('thead', {}, h('tr', {}, h('th', { scope: 'col', text: 'Factor' }), h('th', { scope: 'col', text: 'Factor group' }),
+      G.map((g) => h('th', { scope: 'col', class: 'gh' }, badge(g.sg.code))),
+      h('th', { scope: 'col', class: 'num', text: 'All' }), h('th', { scope: 'col', text: G.length > 1 ? 'Gap between groups' : 'Gap from all employees' }))));
+    bt.append(h('tbody', {}, beh.map((r) => h('tr', {},
+      h('td', { text: label(r.k) }), h('td', { class: 'dom', text: groupOf(r.k) }),
+      r.vals.map((v, i) => {
+        const dir = D.driver_dir[r.k] || 0;
+        const bg = dir ? divColor(r.zs[i] * dir, BLIM) : css('--surface-2');
+        return h('td', { class: 'hc', style: `background:${bg};color:${inkOn(bg)}`, text: fmtStat(v), title: `${G[i].sg.code} · ${label(r.k)}: ${fmtStat(v)} (${fmtSigned(r.zs[i], 2)} SD vs all employees)` });
+      }),
+      h('td', { class: 'num', text: fmtStat(r.ref) }),
+      h('td', {}, h('span', { class: 'spread' }, h('i', { class: 'spread-bar', style: `width:${Math.max(2, (r.spread / maxSpread) * 90)}px` }), h('span', { text: `${fmtN(r.spread, 2)} SD` })))))));
+
+    const refCorr = Object.fromEntries(DRIVERS.map((k) => [k, OUTCOMES.map((o) => corr(OW, k, o))]));
+    const gCorr = G.map((g) => Object.fromEntries(DRIVERS.map((k) => [k, OUTCOMES.map((o) => corr(g.agg, k, o))])));
+    const rowsK = DRIVERS.filter((k) => [refCorr[k], ...gCorr.map((gc) => gc[k])].some((pair) => pair.some((r) => Math.abs(r) >= 0.08)));
+    const cols = [];
+    G.forEach((g, gi) => {
+      if (gi) cols.push({ gap: true });
+      OUTCOMES.forEach((o, oi) => cols.push({ label: `${g.sg.code}\n${oi ? 'productivity' : 'burnout'}`, title: `${g.sg.code} · ${g.sg.name}`, gi, oi }));
+    });
+    cols.push({ gap: true });
+    OUTCOMES.forEach((o, oi) => cols.push({ label: `All\n${oi ? 'productivity' : 'burnout'}`, title: 'All employees in view', gi: -1, oi }));
+    const rAt = (ri, ci) => { const c = cols[ci], k = rowsK[ri]; return c.gi < 0 ? refCorr[k][c.oi] : gCorr[c.gi][k][c.oi]; };
+    const CLIM = 0.55;
+    const flips = [];
+    rowsK.forEach((k) => G.forEach((g, gi) => OUTCOMES.forEach((o, oi) => { if (isFlip(gCorr[gi][k][oi], refCorr[k][oi])) flips.push({ k, g, o, r: gCorr[gi][k][oi], ref: refCorr[k][oi] }); })));
+    rampLegend($('#risk-corr-legend'), [-1, -0.5, 0, 0.5, 1].map((t) => divColor(t * CLIM, CLIM)), 'better outcome', 'worse outcome', h('span', { style: 'display:inline-flex;align-items:center;gap:6px;margin-left:12px' }, h('i', { class: 'sw-ring' }), 'opposite sign to all employees'));
+    heatGrid($('#risk-corr'), {
+      rows: rowsK.map((k) => ({ label: short(k) })), cols, minCol: 58,
+      value: rAt,
+      color: (v, ri, ci) => divColor(harmOf(OUTCOMES[cols[ci].oi], v), CLIM),
+      fmt: (v) => fmtSigned(v, 2),
+      cellClass: (ri, ci) => (cols[ci].gi >= 0 && isFlip(rAt(ri, ci), refCorr[rowsK[ri]][cols[ci].oi]) ? 'is-flip' : ''),
+      tip: (ri, ci) => {
+        const c = cols[ci], k = rowsK[ri], r = rAt(ri, ci), ref = refCorr[k][c.oi];
+        const rows = [{ value: 'r = ' + fmtSigned(r, 3), label: harmOf(OUTCOMES[c.oi], r) > 0 ? 'goes with a worse outcome' : 'goes with a better outcome' }];
+        if (c.gi >= 0) rows.push({ value: fmtSigned(ref, 3), label: 'all employees' });
+        if (c.gi >= 0 && isFlip(r, ref)) rows.push({ value: 'Opposite sign', label: 'selection effect; not for decisions' });
+        return [`${c.gi >= 0 ? G[c.gi].sg.code : 'All'} · ${short(k)} × ${c.oi ? 'productivity' : 'burnout'}`, rows];
+      },
+    });
+    tableView($('#risk-corr-tv'), 'riskcorr', [{ label: 'Factor' }, ...cols.filter((c) => !c.gap).map((c) => ({ label: c.label.replace('\n', ' · '), num: 1 }))],
+      rowsK.map((k, ri) => [short(k), ...cols.map((c, ci) => (c.gap ? null : fmtSigned(rAt(ri, ci), 3))).filter((v) => v !== null)]));
+    const note = clear($('#risk-corr-note'));
+    if (flips.length) {
+      const ex = flips.slice().sort((a, b) => Math.abs(b.r) - Math.abs(a.r))[0];
+      note.append(h('strong', { text: 'Why do some cells change sign? ' }),
+        'The groups were formed from these same measures, so inside a group the measures are tied to each other and some correlations weaken or reverse (a selection effect, also called Berkson\'s paradox). ',
+        `For example, inside ${ex.g.sg.code} "${short(ex.k).toLowerCase()}" has r = ${fmtSigned(ex.r, 2)} with ${ex.o === 'burnout_risk' ? 'burnout' : 'productivity'}, compared with ${fmtSigned(ex.ref, 2)} for all employees. `,
+        `There are ${flips.length} such cells at this level; they should not be used for decisions.`);
+    } else note.append('No correlation changes sign inside the groups at this level.');
+
+    const lv_ = clear($('#risk-levers'));
+    const leverSets = {};
+    OUTCOMES.forEach((o, oi) => {
+      const list = DRIVERS.map((k) => {
+        const rs = gCorr.map((gc) => gc[k][oi]), ref = refCorr[k][oi];
+        const ok = Math.abs(ref) >= MIN_FLIP && rs.every((r) => Math.abs(r) >= MIN_LEVER && Math.sign(r) === Math.sign(ref));
+        return ok ? { k, rs, ref, lo: Math.min(...rs), hi: Math.max(...rs) } : null;
+      }).filter(Boolean).sort((a, b) => Math.abs(b.ref) - Math.abs(a.ref));
+      leverSets[o] = list;
+      const box = h('div', {}, h('h3', { text: o === 'burnout_risk' ? 'For burnout' : 'For productivity' }));
+      if (!list.length) box.append(h('p', { class: 'note', text: 'No factor meets the criteria.' }));
+      for (const it of list) {
+        const harmful = harmOf(o, it.ref) > 0;
+        box.append(h('div', { class: 'lever' }, h('i', { style: `background:${harmful ? 'var(--div-worse)' : 'var(--div-better)'}` }),
+          h('span', { text: `${short(it.k)} ${harmful ? '(worse)' : '(better)'}` }),
+          h('span', { class: 'rng', text: G.length > 1 ? `r ${fmtSigned(it.lo, 2)} to ${fmtSigned(it.hi, 2)}` : `r ${fmtSigned(it.rs[0], 2)}` })));
+      }
+      lv_.append(box);
+    });
+
+    const im = clear($('#risk-implications'));
+    for (const g of G) im.append(h('li', {}, h('strong', { text: `${g.sg.code}: ` }), `${mainIssue(g.sg)} → ${g.sg.actions[0]}.`));
+    const topNames = (o) => leverSets[o].slice(0, 3).map((it) => short(it.k).toLowerCase()).join(', ');
+    if (leverSets.burnout_risk.length || leverSets.productivity_score.length) {
+      im.append(h('li', {}, h('strong', { text: 'Across the level: ' }), `track ${topNames('burnout_risk') || '–'} (burnout) and ${topNames('productivity_score') || '–'} (productivity) as shared KPIs, because they keep the same direction in every group.`));
+    }
+    if (flips.length) im.append(h('li', {}, h('strong', { text: 'Caution: ' }), `${flips.length} correlations change sign inside a group. They come from how the groups were formed, not from a real relationship.`));
+  }
+
+  // ================= SHEET 4: actions =================
+  function renderActions(A, OW, BYSEG) {
+    const host = clear($('#seg-cards'));
+    const bOW = mean(OW, 'burnout_risk'), pOW = mean(OW, 'productivity_score');
+    for (const sg of SEG) {
+      const G = BYSEG[sg.segment_id], st = segStats(G, OW);
+      const deltaEl = (d, badIfUp) => { const cls = Math.abs(d) < 0.05 ? 'is-flat' : (d > 0) === badIfUp ? 'is-bad' : 'is-good'; return h('span', { class: `d ${cls}`, text: `${d > 0 ? '▲' : d < 0 ? '▼' : '●'} ${fmtSigned(d, 1)}` }); };
+      const over = D.flags.map((fl) => ({ fl, v: rate(G, fl), d: rate(G, fl) - rate(OW, fl) })).filter((x) => x.d > 0.02).sort((a, b) => b.d - a.d).slice(0, 3);
+      const card = h('article', { class: 'seg-card' + (state.seg === sg.segment_id ? ' is-sel' : '') },
+        h('div', { class: 'seg-card-head' }, h('div', {}, h('p', { class: 'code', text: sg.code }), h('h3', { text: sg.name })), pill(sg.status, sg.level)),
+        h('div', { class: 'minis' },
+          h('div', { class: 'mini' }, h('span', { class: 'l', text: 'Share' }), h('span', { class: 'v', text: fmtPct(st.share, 1) }), h('span', { class: 'l', text: `${fmtCompact(st.n)} people` })),
+          h('div', { class: 'mini' }, h('span', { class: 'l', text: 'Burnout avg' }), h('span', { class: 'v', text: fmtN(st.b, 1) }), deltaEl(st.b - bOW, true)),
+          h('div', { class: 'mini' }, h('span', { class: 'l', text: 'Productivity avg' }), h('span', { class: 'v', text: fmtN(st.p, 1) }), deltaEl(st.p - pOW, false))),
+        h('div', {}, h('h4', { text: 'Main problems' }), h('div', { class: 'chips' }, sg.problems.length
+          ? sg.problems.map((p) => h('span', { class: 'chip worse' }, p.text, h('span', { class: 'z', text: `${fmtSigned(idxMean(G, IDX.indexOf(p.index)), 2)} SD` })))
+          : h('span', { class: 'chip', text: 'No score clearly worse than average' }))),
+        sg.strengths.length ? h('div', {}, h('h4', { text: 'Strengths' }), h('div', { class: 'chips' }, sg.strengths.map((p) => h('span', { class: 'chip better' }, p.text, h('span', { class: 'z', text: `${fmtSigned(idxMean(G, IDX.indexOf(p.index)), 2)} SD` }))))) : null,
+        over.length ? h('div', {}, h('h4', { text: 'Warning signs above the all-group rate' }), h('ul', { class: 'list' }, over.map((x) => h('li', {}, `${x.fl}: ${fmtPct(x.v, 1)} `, h('span', { class: 'num-inline', text: `(${fmtSigned(x.d * 100, 1)} pp)` }))))) : null,
+        h('div', {}, h('h4', { text: 'Suggested actions' }), h('ul', { class: 'list' }, sg.actions.map((a) => h('li', { text: a })))));
+      card.addEventListener('click', () => selectSegment(sg.segment_id));
+      host.append(card);
+    }
+    const cw = clear($('#company-wide'));
+    if (S.company_wide.length) {
+      hbar(cw, S.company_wide.map((x) => ({ label: x.flag, value: rate(A, x.flag), ref: isFiltered() ? rate(POP, x.flag) : undefined,
+        tip: [x.flag, [{ value: fmtPct(rate(A, x.flag), 1), label: 'in view' }, { value: fmtN(x.spread_pp, 1) + ' pp', label: 'gap between groups' }]] })), { fmt: (x) => fmtPct(x, 1), max: 1 });
+      cw.append(h('ul', { class: 'list', style: 'margin-top:12px' }, S.company_wide.map((x) => h('li', {}, h('strong', { text: x.flag + ': ' }), x.action, h('span', { class: 'num-inline', text: ` (gap between groups only ${fmtN(x.spread_pp, 1)} pp)` })))));
+    } else cw.append(h('p', { class: 'note', text: 'No warning sign has the same rate in every group.' }));
+  }
+
+  // ================= orchestration =================
+  function renderAll() {
+    let pred;
+    if (state.tab === 'risk') { const ids = levelIds(); pred = (s_, o, w) => ids.includes(s_) && inOW(s_, o, w); }
+    else pred = (s_, o, w) => (state.seg < 0 || s_ === state.seg) && inOW(s_, o, w);
+    const A = aggregate(pred);
+    const OW = owFiltered() ? aggregate(inOW) : POP;
+    const BYSEG = state.tab === 'segments' || state.tab === 'actions'
+      ? Array.from({ length: NSEG }, (_, id) => aggregate((s_, o, w) => s_ === id && inOW(s_, o, w))) : null;
+    $('#field-seg').hidden = state.tab === 'risk';
+    $('#field-level').hidden = state.tab !== 'risk';
+    $('#f-reset').disabled = !(state.seg >= 0 || owFiltered() || (state.tab === 'risk' && LEVELS[state.level] !== S.focus_level));
+    renderKPIs(A);
+    ({ issues: renderIssues, segments: renderSegments, risk: renderRisk, actions: renderActions })[state.tab](A, OW, BYSEG);
+    writeHash();
+  }
+
+  function syncFilters() {
+    $('#f-seg').value = String(state.seg);
+    $('#f-level').value = String(state.level);
+    $('#f-occ').value = String(state.occ);
+    $('#f-wm').value = String(state.wm);
+  }
+  function selectSegment(id) { state.seg = state.seg === id ? -1 : id; syncFilters(); renderAll(); }
+
+  function initFilters() {
+    $('#f-seg').append(h('option', { value: '-1', text: 'All groups' }), ...SEG.map((sg) => h('option', { value: sg.segment_id, text: `${sg.code} · ${sg.name}` })));
+    $('#f-level').append(...LEVELS.map((l, i) => {
+      const segs = LEVEL_SEGS[l], share = segs.reduce((a, sg) => a + sg.share, 0);
+      return h('option', { value: i, text: `${l} · ${segs.map((sg) => sg.code).join(', ')} (${fmtPct(share, 0)})` });
+    }));
+    $('#f-occ').append(h('option', { value: '-1', text: 'All occupations' }), ...OCC.map((o, i) => h('option', { value: i, text: o })));
+    $('#f-wm').append(h('option', { value: '-1', text: 'All work modes' }), ...WM.map((w, i) => h('option', { value: i, text: w })));
+    for (const [id, key] of [['#f-seg', 'seg'], ['#f-level', 'level'], ['#f-occ', 'occ'], ['#f-wm', 'wm']]) $(id).addEventListener('change', (e) => { state[key] = +e.target.value; renderAll(); });
+    $('#f-reset').addEventListener('click', () => { state.seg = state.occ = state.wm = -1; state.level = Math.max(0, LEVELS.indexOf(S.focus_level)); syncFilters(); renderAll(); });
+    syncFilters();
+  }
+
+  function writeHash() {
+    const parts = [state.tab];
+    for (const k of ['seg', 'occ', 'wm']) if (state[k] >= 0) parts.push(`${k}=${state[k]}`);
+    if (state.tab === 'risk') parts.push(`level=${state.level}`);
+    try { history.replaceState(null, '', '#' + parts.join(';')); } catch (e) { /* sandboxed frame */ }
+  }
+  function readHash() {
+    const [tab, ...kv] = decodeURIComponent(location.hash.slice(1)).split(';');
+    const limits = { seg: NSEG, occ: OCC.length, wm: WM.length, level: LEVELS.length };
+    for (const p of kv) {
+      const [k, v] = p.split('=');
+      if (k in limits && Number.isInteger(+v) && +v >= 0 && +v < limits[k]) state[k] = +v;
+    }
+    return TABS.includes(tab) ? tab : null;
+  }
+
+  function setTab(t, focus) {
+    state.tab = t;
+    for (const x of TABS) {
+      const b = $('#tab-btn-' + x);
+      b.setAttribute('aria-selected', String(x === t));
+      b.tabIndex = x === t ? 0 : -1;
+      $('#tab-' + x).hidden = x !== t;
+    }
+    if (focus) $('#tab-btn-' + t).focus();
+    try { localStorage.setItem('burnout-report-tab', t); } catch (e) { /* storage unavailable */ }
+    renderAll();
+  }
+  function initTabs() {
+    TABS.forEach((t, i) => {
+      const b = $('#tab-btn-' + t);
+      b.addEventListener('click', () => setTab(t));
+      b.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') setTab(TABS[(i + 1) % TABS.length], true);
+        else if (e.key === 'ArrowLeft') setTab(TABS[(i + TABS.length - 1) % TABS.length], true);
+      });
+    });
+  }
+
+  renderStatic();
+  const fromHash = readHash();
+  initFilters();
+  initTabs();
+  let saved = null;
+  try { saved = localStorage.getItem('burnout-report-tab'); } catch (e) { /* storage unavailable */ }
+  setTab(fromHash || (TABS.includes(saved) ? saved : 'issues'));
+
+  let lastW = innerWidth, rt = 0;
+  addEventListener('resize', () => { if (Math.abs(innerWidth - lastW) < 8) return; lastW = innerWidth; clearTimeout(rt); rt = setTimeout(renderAll, 150); });
+})();
+</script>

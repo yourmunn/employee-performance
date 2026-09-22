@@ -1,0 +1,14 @@
+value,dimension,employees,burnout_mean,productivity_mean
+Analyst,Occupation,714478,48.613186,71.42449
+Content Creator,Occupation,714722,48.59311,71.43228
+Designer,Occupation,713772,48.58611,71.459816
+Freelancer,Occupation,715500,48.57832,71.46476
+Manager,Occupation,714213,48.579754,71.429985
+Software Engineer,Occupation,713889,48.573906,71.43908
+Student,Occupation,713426,48.56179,71.45736
+Hybrid,Work mode,1748165,48.584885,71.45897
+Office,Work mode,1001061,48.57939,71.43756
+Remote,Work mode,2250774,48.584793,71.435165
+Balanced,Device use type,1749883,48.59186,71.42973
+Entertainment-Centric,Device use type,1500738,48.5831,71.453415
+Work-Centric,Device use type,1749379,48.576176,71.450096

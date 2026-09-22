@@ -1,0 +1,7 @@
+code,name,risk level,employees,share %,burnout mean,productivity mean,% burnout 70+,% low productivity,warning signs per person,risk score
+N1,Low focus + mental strain,Very high,835607,16.7121,58.8874,49.5116,31.0119,49.591,4.6896,1.487
+N2,Heavy device use,High,829775,16.5955,54.5617,67.8528,24.1179,16.1102,3.5881,0.4379
+N3,Low focus + low mental strain,High,836373,16.7275,41.1937,63.8357,8.9953,23.2737,2.6939,0.3539
+N4,Mental strain + strong focus,High,839807,16.7961,55.7589,80.429,26.0729,4.7437,3.9673,0.3251
+N5,Light device use,Low,824113,16.4823,42.6029,76.1901,10.0364,6.7554,2.7466,0.0
+N6,Strong focus + low mental strain,Low,834325,16.6865,38.4124,90.8764,6.9985,0.3901,2.2272,0.0

@@ -1,0 +1,7 @@
+code,name,risk level,share %,main problems,strengths,suggested actions
+N1,Low focus + mental strain,Very high,16.7,low focus (+1.03 SD); mental strain (+0.98 SD),–,Protected deep-work blocks or meeting-free days; fewer context switches | Training on prioritisation and time management; review the main sources of distraction | Regular 1:1s with managers; review workload and how clear the goals are | Recognition and development plans; access to counselling
+N2,Heavy device use,High,16.6,heavy device use (+1.05 SD),–,Right-to-disconnect policy after hours; turn off non-urgent notifications | Batch notifications into set times; fewer chat channels; coaching on digital habits
+N3,Low focus + low mental strain,High,16.7,low focus (+0.93 SD),low mental strain (-1.08 SD),Protected deep-work blocks or meeting-free days; fewer context switches | Training on prioritisation and time management; review the main sources of distraction
+N4,Mental strain + strong focus,High,16.8,mental strain (+1.06 SD),strong focus (-0.94 SD),Regular 1:1s with managers; review workload and how clear the goals are | Recognition and development plans; access to counselling
+N5,Light device use,Low,16.5,–,light device use (-1.06 SD),Keep current practices; use as a comparison group and as peer mentors
+N6,Strong focus + low mental strain,Low,16.7,–,strong focus (-1.04 SD); low mental strain (-0.96 SD),Keep current practices; use as a comparison group and as peer mentors

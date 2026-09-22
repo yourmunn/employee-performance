@@ -1,0 +1,21 @@
+column,value,employees,share %
+Occupation,Freelancer,715500,14.31
+Occupation,Content Creator,714722,14.29
+Occupation,Analyst,714478,14.29
+Occupation,Manager,714213,14.28
+Occupation,Software Engineer,713889,14.28
+Occupation,Designer,713772,14.28
+Occupation,Student,713426,14.27
+Work mode,Remote,2250774,45.02
+Work mode,Hybrid,1748165,34.96
+Work mode,Office,1001061,20.02
+Device use type,Balanced,1749883,35.0
+Device use type,Work-Centric,1749379,34.99
+Device use type,Entertainment-Centric,1500738,30.01
+Self-reported mental state,Distracted,1500163,30.0
+Self-reported mental state,Balanced,1250768,25.02
+Self-reported mental state,Focused,1249707,24.99
+Self-reported mental state,Burnout,999362,19.99
+Productivity category,High,2374159,47.48
+Productivity category,Medium,1784357,35.69
+Productivity category,Low,841484,16.83

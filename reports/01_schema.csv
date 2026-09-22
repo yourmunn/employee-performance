@@ -1,0 +1,35 @@
+column,label,group,dtype,unique values,missing,missing %
+user_id,Employee ID,Profile,int32,5000000,0,0.0
+age,Age,Profile,int16,42,0,0.0
+occupation,Occupation,Profile,category,7,0,0.0
+work_mode,Work mode,Profile,category,3,0,0.0
+device_usage_type,Device use type,Profile,category,3,0,0.0
+daily_screen_time,Screen time (h/day),Digital load,float32,171,0,0.0
+social_media_hours,Social media (h/day),Digital load,float32,121,100000,2.0
+doomscrolling_duration,Doomscrolling (h/day),Digital load,float32,80,0,0.0
+app_switch_frequency,App switches per day,Digital load,float32,240,0,0.0
+notification_count,Notifications per day,Digital load,float32,380,0,0.0
+smartphone_unlocks,Phone unlocks per day,Digital load,float32,285,0,0.0
+late_night_device_usage,Late-night device use (0/1),Digital load,float32,2,0,0.0
+focus_sessions,Focus sessions per day,Focus & output,float32,10,0,0.0
+deep_work_hours,Deep work (h/day),Focus & output,float32,117,100000,2.0
+distraction_frequency,Distractions per day,Focus & output,float32,119,0,0.0
+task_completion_rate,Task completion rate (%),Focus & output,float32,61,0,0.0
+concentration_score,Concentration (1-10),Focus & output,float32,10,0,0.0
+sleep_hours,Sleep (h/night),Sleep & recovery,float32,71,100000,2.0
+sleep_quality,Sleep quality (1-10),Sleep & recovery,float32,10,0,0.0
+caffeine_intake,Caffeine (cups/day),Sleep & recovery,float32,8,0,0.0
+physical_activity,Physical activity (h/day),Sleep & recovery,float32,51,0,0.0
+stress_level,Stress (1-10),Sleep & recovery,float32,10,0,0.0
+workspace_quality,Workspace quality (1-10),Work environment,float32,10,0,0.0
+meeting_hours,Meetings (h/day),Focus & output,float32,100,0,0.0
+internet_stability,Internet stability (1-10),Work environment,float32,10,0,0.0
+remote_work_days,Remote days per week,Work environment,float32,7,0,0.0
+motivation_level,Motivation (1-10),Mental state,float32,10,100000,2.0
+mental_fatigue,Mental fatigue (1-10),Mental state,float32,10,0,0.0
+emotional_exhaustion,Emotional exhaustion (1-10),Mental state,float32,10,0,0.0
+work_satisfaction,Job satisfaction (1-10),Mental state,float32,10,0,0.0
+mental_state,Self-reported mental state,Profile,category,4,0,0.0
+burnout_risk,Burnout risk (0-100),Outcome,float32,101,0,0.0
+productivity_score,Productivity score (0-100),Outcome,float32,101,0,0.0
+productivity_category,Productivity category,Outcome,category,3,0,0.0
