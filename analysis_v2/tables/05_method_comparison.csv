@@ -1,0 +1,3 @@
+method,groups,eta2_burnout,eta2_productivity,deterministic
+K-Means (k=8),8,0.3110225181358244,0.2535612649447971,no
+Median-split rule,8,0.3029979664149368,0.25350980249800864,yes

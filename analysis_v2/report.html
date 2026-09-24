@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Burnout and Productivity</title>
+<style>
+  :root{
+    --surface:#ffffff; --panel:#fbfbfa; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+    --grid:#e9e9e6; --axis:#cfcec6; --line:#e3e3df;
+    --blue:#2a78d6; --blue-deep:#1c5cab; --red:#e34948; --red-deep:#8f2426;
+    --grad:linear-gradient(90deg,#2a78d6 0%,#5a6fae 38%,#9c5570 68%,#8f2426 100%);
+    --maxw:1140px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--surface);color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+  h1,h2,h3{line-height:1.2;margin:0}
+  h1{font-size:clamp(28px,4.6vw,46px);font-weight:700;letter-spacing:-.6px}
+  h2{font-size:clamp(20px,2.7vw,28px);font-weight:700;letter-spacing:-.3px}
+  h3{font-size:17px;font-weight:600;margin-top:22px}
+  .cols h3:first-child{margin-top:8px}
+  p{margin:.55em 0}
+  .lede{font-size:clamp(16px,2vw,19px);color:var(--ink2);max-width:66ch}
+  .small{font-size:13.5px;color:var(--muted)}
+  .rule{height:8px;background:var(--grad);border:0}
+
+  /* masthead */
+  header{padding:0 0 26px}
+  .mast{display:flex;gap:28px;align-items:flex-start;padding:34px 0 8px;flex-wrap:wrap}
+  .mast-txt{flex:1 1 420px;min-width:280px}
+  .eyebrow{font-size:12.5px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .cat{flex:0 0 190px;display:flex;justify-content:center;align-items:flex-start}
+  @media(max-width:700px){.cat{flex-basis:100%;justify-content:flex-start}}
+
+  /* notice */
+  .notice{display:flex;gap:14px;align-items:flex-start;background:#fdecec;
+    border-left:5px solid var(--red-deep);border-radius:0 12px 12px 0;padding:16px 20px;margin:18px 0 0}
+  .notice b{color:var(--red-deep)}
+
+  /* tiles */
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(228px,1fr));gap:16px;margin:22px 0 0}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 22px;position:relative;overflow:hidden}
+  .tile::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--grad)}
+  .tile .n{font-size:40px;font-weight:700;letter-spacing:-1px;line-height:1.05}
+  .tile .n.b{color:var(--blue-deep)} .tile .n.r{color:var(--red-deep)}
+  .tile .t{font-size:14.5px;color:var(--ink2);margin-top:6px}
+
+  section{padding:40px 0 8px;border-top:1px solid var(--line);margin-top:38px}
+  section:first-of-type{border-top:0;margin-top:0}
+  .sec-head{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+  .sec-num{font-size:13px;font-weight:700;letter-spacing:1.5px;color:var(--muted)}
+
+  figure{margin:22px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 20px 14px}
+  figcaption{font-size:13px;color:var(--muted);margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+  .fig-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+  .legend{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .key{display:inline-flex;gap:7px;align-items:center;font-size:13.5px;color:var(--ink2)}
+  .sw{width:13px;height:13px;border-radius:3px;display:inline-block}
+  .btn{font:inherit;font-size:13px;color:var(--ink2);background:var(--surface);
+    border:1px solid var(--axis);border-radius:999px;padding:5px 13px;cursor:pointer}
+  .btn:hover{border-color:var(--blue);color:var(--blue-deep)}
+  .btn[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+
+  table{border-collapse:collapse;width:100%;font-size:14px;margin-top:6px}
+  th,td{text-align:right;padding:7px 10px;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{font-size:12.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:600}
+  tbody tr:hover{background:var(--panel)}
+  .tbl[hidden]{display:none}
+
+  svg{display:block;width:100%;height:auto;overflow:visible}
+  .gl{stroke:var(--grid);stroke-width:1}
+  .ax{fill:var(--muted);font-size:12px}
+  .lbl{fill:var(--ink2);font-size:13px}
+  .val{font-size:12.5px;font-weight:600}
+  .bar{transition:opacity .12s}
+  figure.dim .bar{opacity:.34}
+  figure.dim .bar.on{opacity:1}
+
+  .tip{position:fixed;pointer-events:none;opacity:0;transition:opacity .1s;z-index:9;
+    background:#101010;color:#fff;border-radius:9px;padding:9px 12px;font-size:13px;
+    line-height:1.45;max-width:270px;box-shadow:0 8px 22px rgba(0,0,0,.24)}
+  .tip b{color:#fff}
+  .tip .r{color:#ff9a99} .tip .b{color:#8fc0ff}
+
+  .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
+  ul{margin:.5em 0;padding-left:1.15em} li{margin:.32em 0;color:var(--ink2)}
+  footer{margin:52px 0 40px;padding-top:20px;border-top:1px solid var(--line)}
+  .cat-sm{vertical-align:-6px;margin-right:8px}
+</style>
+</head>
+<body>
+<hr class="rule">
+<div class="wrap">
+
+<header>
+  <div class="mast">
+    <div class="mast-txt">
+      <p class="eyebrow">Employee wellbeing · second analysis</p>
+      <h1>Burnout and productivity:<br>what the data actually supports</h1>
+      <p class="lede">Three habits explain how employees differ. Fifteen others do not — and that
+      changes what you can reasonably recommend to whom.</p>
+    </div>
+    <div class="cat">
+      <!-- playful black cat: mid-pounce, tail up, one eye winking -->
+      <svg viewBox="0 0 200 180" width="190" height="171" role="img" aria-label="Playful black cat">
+        <defs>
+          <linearGradient id="gcat" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#232323"/><stop offset="100%" stop-color="#0a0a0a"/>
+          </linearGradient>
+          <linearGradient id="gstripe" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#2a78d6"/><stop offset="100%" stop-color="#8f2426"/>
+          </linearGradient>
+        </defs>
+        <!-- tail, flicked up and curled -->
+        <path d="M148 132 C176 130 186 104 172 86 C162 72 146 76 146 88 C146 97 158 96 160 104
+                 C163 115 156 122 144 123 Z" fill="url(#gcat)"/>
+        <!-- back paw kick -->
+        <ellipse cx="60" cy="150" rx="15" ry="8" fill="#141414"/>
+        <ellipse cx="96" cy="152" rx="15" ry="8" fill="#141414"/>
+        <!-- body, crouched -->
+        <path d="M44 148 C34 122 44 100 72 96 L128 96 C152 100 158 124 150 148 Z" fill="url(#gcat)"/>
+        <!-- raised front paw (the mischief) -->
+        <path d="M128 112 C142 104 152 92 148 82 C146 76 138 76 136 82 C134 88 138 92 134 98 Z" fill="#141414"/>
+        <ellipse cx="146" cy="80" rx="9" ry="7" fill="#141414"/>
+        <!-- head -->
+        <circle cx="86" cy="72" r="34" fill="url(#gcat)"/>
+        <!-- ears -->
+        <path d="M58 52 L52 18 L82 40 Z" fill="#141414"/>
+        <path d="M114 52 L120 18 L90 40 Z" fill="#141414"/>
+        <path d="M61 45 L58 27 L74 39 Z" fill="#e5605e"/>
+        <path d="M111 45 L114 27 L98 39 Z" fill="#e5605e"/>
+        <!-- open eye -->
+        <ellipse cx="73" cy="70" rx="8" ry="9.5" fill="#2a78d6"/>
+        <ellipse cx="73" cy="70.5" rx="2.6" ry="7" fill="#070707"/>
+        <circle cx="75.8" cy="66" r="2.3" fill="#fff"/>
+        <!-- winking eye -->
+        <path d="M91 71 Q99.5 64 108 71" stroke="#f0f0f0" stroke-width="3.1" fill="none" stroke-linecap="round"/>
+        <!-- muzzle -->
+        <path d="M82 81 H92 L87 86 Z" fill="#e5605e"/>
+        <path d="M87 86 Q80 93 74 87" stroke="#d8d8d8" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M87 86 Q94 93 100 87" stroke="#d8d8d8" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- whiskers -->
+        <g stroke="#b9b9b9" stroke-width="1.5" stroke-linecap="round" fill="none">
+          <path d="M66 84 L36 78"/><path d="M66 88 L36 90"/>
+          <path d="M108 84 L138 78"/><path d="M108 88 L138 90"/>
+        </g>
+        <!-- collar in the report's gradient -->
+        <path d="M60 99 Q86 112 112 99 L112 107 Q86 120 60 107 Z" fill="url(#gstripe)"/>
+        <circle cx="86" cy="115" r="5" fill="#8f2426"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="notice">
+    <div>
+      <b>Practice data.</b> This is a public, synthetic dataset — its inputs were generated
+      independently of each other, which no real workforce is. Every number here demonstrates a
+      method. Re-run it on real HR data before acting on any of it.
+    </div>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><div class="n r">3 of 18</div>
+      <div class="t">habits account for all the difference between groups. The other fifteen sit at
+      identical averages everywhere.</div></div>
+    <div class="tile"><div class="n b">9.8%</div>
+      <div class="t">of staff are burning out <em>while performing above average</em> — invisible in
+      any performance report.</div></div>
+    <div class="tile"><div class="n b">+21</div>
+      <div class="t">productivity points go with more deep work, at no cost in burnout.</div></div>
+    <div class="tile"><div class="n r">0.00</div>
+      <div class="t">of the variation in either outcome is explained by job title, work mode or
+      device type.</div></div>
+  </div>
+</header>
+
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2>Eight groups, ordered by priority</h2></div>
+  <p class="lede">A person's group is three comparisons: is their exhaustion above the median, their
+  stress above the median, their deep work above the median? No model is needed to place someone.</p>
+
+  <figure id="f-seg">
+    <div class="fig-top">
+      <div class="legend">
+        <span class="key"><span class="sw" style="background:var(--red)"></span>Burnout risk</span>
+        <span class="key"><span class="sw" style="background:var(--blue)"></span>Productivity</span>
+        <span class="key"><span class="sw" style="background:var(--grad)"></span>Priority (high → low)</span>
+      </div>
+      <button class="btn" data-table="t-seg" aria-pressed="false">Show table</button>
+    </div>
+    <svg id="svg-seg" viewBox="0 0 900 430" aria-label="Burnout and productivity for the eight groups"></svg>
+    <table class="tbl" id="t-seg" hidden></table>
+    <figcaption>Scores out of 100, averaged over 4,612,062 employees. Bars are ordered by a risk
+    score that adds only the harmful side of each measure, so strong output can never subtract from
+    a burnout signal.</figcaption>
+  </figure>
+
+  <p>The second row is the one that does not show up anywhere else. High exhaustion, high stress,
+  <em>and</em> high deep work: burnout 67, productivity 76. They are still delivering, so no
+  performance review flags them.</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>What moves each outcome</h2></div>
+  <p class="lede">Each habit's effect, holding all the others constant. At 4.6 million rows almost
+  every coefficient is "statistically significant", so a second bar is applied: the effect also has
+  to be large enough to matter.</p>
+
+  <figure id="f-drv">
+    <div class="fig-top">
+      <div class="legend"><span class="key">Each panel is titled with its outcome — bars are
+        positive to the right, negative to the left.</span></div>
+      <button class="btn" data-table="t-drv" aria-pressed="false">Show table</button>
+    </div>
+    <svg id="svg-drv" viewBox="0 0 900 470" aria-label="Standardised effect of each habit"></svg>
+    <table class="tbl" id="t-drv" hidden></table>
+    <figcaption>Standardised coefficients from two regressions. Only habits clearing |β| ≥ 0.05 are
+    drawn; seven habits clear statistical significance but fall below that bar and are treated as
+    noise.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>Deep work is not what exhausts people</h2></div>
+  <p class="lede">Output climbs steeply with hours of deep work. Burnout stays flat across the band
+  where 86% of employees sit.</p>
+
+  <figure id="f-dw">
+    <div class="fig-top">
+      <div class="legend">
+        <span class="key"><span class="sw" style="background:var(--blue)"></span>Productivity</span>
+        <span class="key"><span class="sw" style="background:var(--red)"></span>Burnout risk</span>
+      </div>
+      <button class="btn" data-table="t-dw" aria-pressed="false">Show table</button>
+    </div>
+    <svg id="svg-dw" viewBox="0 0 900 380" aria-label="Productivity and burnout by hours of deep work"></svg>
+    <table class="tbl" id="t-dw" hidden></table>
+    <figcaption>Group averages by hours of deep work per day. Association only — this does not show
+    that deep work causes anything.</figcaption>
+  </figure>
+
+  <p>Managers do not face a trade-off here. Protecting people from burnout and letting them
+  concentrate are separate levers, and pulling the second one costs nothing on the first.</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>What each change is associated with</h2></div>
+  <p class="lede">Differences between real groups that match on the other two habits — not
+  projections from a regression line.</p>
+
+  <figure id="f-wi">
+    <div class="fig-top">
+      <div class="legend">
+        <span class="key"><span class="sw" style="background:var(--red)"></span>Burnout falls by</span>
+        <span class="key"><span class="sw" style="background:var(--blue)"></span>Productivity rises by</span>
+      </div>
+      <button class="btn" data-table="t-wi" aria-pressed="false">Show table</button>
+    </div>
+    <svg id="svg-wi" viewBox="0 0 900 262" aria-label="Observed improvement associated with each change"></svg>
+    <table class="tbl" id="t-wi" hidden></table>
+    <figcaption>Each bar is the average across the four group pairs that differ only on this habit.
+    Both outcomes move in the good direction, so both are drawn as gains on one scale. The spread
+    across those four pairs is under 0.2 points in every case — hover a bar, or open the table, for
+    the exact range.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2>How the number of groups was decided</h2></div>
+  <p class="lede">Re-running the clustering with different random seeds is the usual reliability
+  test. It is not sufficient, and relying on it produced the wrong answer first time.</p>
+
+  <figure id="f-k">
+    <div class="fig-top">
+      <div class="legend">
+        <span class="key"><span class="sw" style="background:#cfcec6"></span>Across random seeds — insufficient</span>
+        <span class="key"><span class="sw" style="background:var(--red-deep)"></span>Across employee samples — decides</span>
+      </div>
+      <button class="btn" data-table="t-k" aria-pressed="false">Show table</button>
+    </div>
+    <svg id="svg-k" viewBox="0 0 900 330" aria-label="Stability of each number of groups"></svg>
+    <table class="tbl" id="t-k" hidden></table>
+    <figcaption>Adjusted Rand Index, 1.0 = identical groupings. Only k=8 clears the reliability bar
+    on the test that varies the employees.</figcaption>
+  </figure>
+
+  <p>A number of groups can be perfectly reproducible on one fixed dataset and still fall apart when
+  the employees change — on a fixed dataset the coin always lands the same way. The structure has
+  eight cells because three habits split two ways each; forcing seven makes the algorithm merge one
+  cell, and which cell it merges depends on the sample.</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">06</span><h2>What this cannot support</h2></div>
+  <div class="cols">
+    <div>
+      <h3>Not cause</h3>
+      <p class="small">Everything here is association. Nothing shows that lowering someone's stress
+      would lower their burnout.</p>
+      <h3>Not targeted lifestyle advice</h3>
+      <p class="small">Groups do not differ on sleep, screen time, exercise or scrolling — the
+      largest gap between any two groups on any of those is 0.006 of a standard deviation. Advice
+      there is company-wide, not per group.</p>
+    </div>
+    <div>
+      <h3>Not a real workforce</h3>
+      <p class="small">Synthetic data, with inputs independent by construction.</p>
+      <h3>Practical limits</h3>
+      <p class="small">2% of raw rows are missing deep-work hours and cannot be placed. Groups run
+      10%–15% in size, because medians of discrete 1–10 scales do not split a population evenly.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="small">
+    <svg class="cat-sm" width="22" height="22" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M8 14 L6 4 L16 10 Z" fill="#141414"/><path d="M32 14 L34 4 L24 10 Z" fill="#141414"/>
+      <circle cx="20" cy="22" r="14" fill="#141414"/>
+      <ellipse cx="14.5" cy="20" rx="3" ry="3.6" fill="#2a78d6"/>
+      <path d="M22 21 Q25.5 17.5 29 21" stroke="#efefef" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M17.5 27 H22.5 L20 30 Z" fill="#e5605e"/>
+    </svg>
+    Second analysis · 4,612,062 employees · method chosen in the open and re-checked until the
+    results stopped changing. Full working in <code>analysis_v2.ipynb</code>; the verification log is
+    section 9.
+  </p>
+</footer>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const DATA = {
+  segments: [
+    {name:"Exhaustion HIGH / Stress HIGH / Deep work LOW",  short:"Exh ▲ · Stress ▲ · Deep work ▼", share:10.23, burnout:68.35, prod:54.27, risk:1.854},
+    {name:"Exhaustion HIGH / Stress HIGH / Deep work HIGH", short:"Exh ▲ · Stress ▲ · Deep work ▲", share:9.78,  burnout:67.13, prod:75.64, risk:1.180},
+    {name:"Exhaustion HIGH / Stress LOW / Deep work LOW",   short:"Exh ▲ · Stress ▼ · Deep work ▼", share:10.23, burnout:53.67, prod:60.00, risk:1.159},
+    {name:"Exhaustion LOW / Stress HIGH / Deep work LOW",   short:"Exh ▼ · Stress ▲ · Deep work ▼", share:15.32, burnout:48.70, prod:61.96, risk:0.985},
+    {name:"Exhaustion HIGH / Stress LOW / Deep work HIGH",  short:"Exh ▲ · Stress ▼ · Deep work ▲", share:9.77,  burnout:52.33, prod:80.44, risk:0.605},
+    {name:"Exhaustion LOW / Stress LOW / Deep work LOW",    short:"Exh ▼ · Stress ▼ · Deep work ▼", share:15.32, burnout:33.94, prod:67.54, risk:0.578},
+    {name:"Exhaustion LOW / Stress HIGH / Deep work HIGH",  short:"Exh ▼ · Stress ▲ · Deep work ▲", share:14.66, burnout:47.43, prod:81.93, risk:0.477},
+    {name:"Exhaustion LOW / Stress LOW / Deep work HIGH",   short:"Exh ▼ · Stress ▼ · Deep work ▲", share:14.69, burnout:32.74, prod:86.14, risk:0.193}
+  ],
+  drivers: {
+    burnout:[
+      ["Emotional exhaustion",0.511],["Stress",0.383],["Job satisfaction",-0.254],
+      ["Screen time",0.221],["Doomscrolling",0.200],["Late-night device use",0.159],
+      ["Distractions per day",0.152],["Sleep hours",-0.130],["Physical activity",-0.110],
+      ["Notifications per day",0.096]
+    ],
+    productivity:[
+      ["Deep work",0.560],["Task completion rate",0.355],["Concentration",0.348],
+      ["Motivation",0.231],["Focus sessions",0.231],["Emotional exhaustion",-0.181],
+      ["Workspace quality",0.173],["Social media",-0.141],["Stress",-0.136],
+      ["Job satisfaction",0.090],["App switches",-0.083],["Screen time",-0.078],
+      ["Doomscrolling",-0.071],["Late-night device use",-0.056],["Distractions per day",-0.054]
+    ]
+  },
+  deepwork:[
+    {band:"0–1",share:12.7,prod:51.3,burn:49.16},{band:"1–2",share:15.2,prod:60.4,burn:49.21},
+    {band:"2–3",share:20.9,prod:67.9,burn:49.22},{band:"3–4",share:21.2,prod:75.0,burn:49.19},
+    {band:"4–5",share:16.0,prod:81.6,burn:49.20},{band:"5–6",share:8.8,prod:88.3,burn:44.97},
+    {band:"6–7",share:3.6,prod:92.7,burn:44.37},{band:"7–8",share:1.1,prod:95.8,burn:44.53},
+    {band:"8–12",share:0.3,prod:97.9,burn:44.59}
+  ],
+  whatif:[
+    {change:"Exhaustion HIGH → LOW", bMin:-19.73,bMax:-19.59,bAvg:-19.67, pMin:5.70,pMax:7.69,pAvg:6.80, affects:40.0},
+    {change:"Stress HIGH → LOW",     bMin:-14.80,bMax:-14.68,bAvg:-14.73, pMin:4.21,pMax:5.74,pAvg:5.08, affects:49.99},
+    {change:"Deep work LOW → HIGH",  bMin:-1.34,bMax:-1.21,bAvg:-1.26,   pMin:18.60,pMax:21.37,pAvg:20.10, affects:51.1}
+  ],
+  kchoice:[
+    {k:5,seeds:0.988,data:0.617},{k:6,seeds:0.972,data:0.467},{k:7,seeds:0.743,data:0.742},
+    {k:8,seeds:0.983,data:0.976},{k:9,seeds:0.673,data:0.714}
+  ]
+};
+
+const NS="http://www.w3.org/2000/svg";
+const el=(n,a={})=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+const fmt=(v,d=1)=>(v<0?"−":"")+Math.abs(v).toFixed(d);
+const tip=document.getElementById("tip");
+
+function hover(node, html, fig){
+  node.addEventListener("pointerenter",e=>{
+    tip.innerHTML=html; tip.style.opacity=1;
+    if(fig){fig.classList.add("dim"); node.classList.add("on");}
+  });
+  node.addEventListener("pointermove",e=>{
+    const r=tip.getBoundingClientRect();
+    let x=e.clientX+15, y=e.clientY-r.height-12;
+    if(x+r.width>innerWidth-8) x=e.clientX-r.width-15;
+    if(y<8) y=e.clientY+18;
+    tip.style.left=x+"px"; tip.style.top=y+"px";
+  });
+  node.addEventListener("pointerleave",()=>{
+    tip.style.opacity=0;
+    if(fig){fig.classList.remove("dim"); node.classList.remove("on");}
+  });
+}
+// gradient blue → dark red, by position in the priority order
+function gradAt(t){
+  const stops=[[42,120,214],[90,111,174],[156,85,112],[143,36,38]], pos=[0,.38,.68,1];
+  let i=0; while(i<pos.length-2 && t>pos[i+1]) i++;
+  const f=(t-pos[i])/(pos[i+1]-pos[i]||1), a=stops[i], b=stops[i+1];
+  return `rgb(${a.map((v,j)=>Math.round(v+(b[j]-v)*f)).join(",")})`;
+}
+function table(id, head, rows){
+  const t=document.getElementById(id);
+  t.innerHTML="<thead><tr>"+head.map(h=>`<th>${h}</th>`).join("")+"</tr></thead><tbody>"+
+    rows.map(r=>"<tr>"+r.map(c=>`<td>${c}</td>`).join("")+"</tr>").join("")+"</tbody>";
+}
+document.querySelectorAll(".btn[data-table]").forEach(b=>{
+  b.addEventListener("click",()=>{
+    const t=document.getElementById(b.dataset.table), open=t.hasAttribute("hidden");
+    t.toggleAttribute("hidden"); b.setAttribute("aria-pressed",open);
+    b.textContent=open?"Hide table":"Show table";
+  });
+});
+
+/* ---- 1. segments ---- */
+(function(){
+  const svg=document.getElementById("svg-seg"), fig=document.getElementById("f-seg");
+  const W=900,H=430,L=268,R=54,T=14,rowH=(H-T-30)/8;
+  const x=v=>L+(v/100)*(W-L-R);
+  [0,20,40,60,80,100].forEach(v=>{
+    svg.appendChild(el("line",{x1:x(v),x2:x(v),y1:T,y2:H-30,class:"gl"}));
+    const t=el("text",{x:x(v),y:H-12,class:"ax","text-anchor":"middle"});t.textContent=v;svg.appendChild(t);
+  });
+  DATA.segments.forEach((s,i)=>{
+    const y=T+i*rowH, h=rowH*.34;
+    svg.appendChild(el("rect",{x:L-10,y:y+rowH*.14,width:5,height:rowH*.72,rx:2.5,fill:gradAt(i/7)}));
+    const n=el("text",{x:L-22,y:y+rowH*.44,class:"lbl","text-anchor":"end"});n.textContent=s.short;svg.appendChild(n);
+    const sh=el("text",{x:L-22,y:y+rowH*.72,class:"ax","text-anchor":"end"});sh.textContent=s.share.toFixed(1)+"% of staff";svg.appendChild(sh);
+    const g=el("g",{class:"bar"});
+    g.appendChild(el("rect",{x:L,y:y+rowH*.10,width:x(s.burnout)-L,height:h,rx:4,fill:"var(--red)"}));
+    g.appendChild(el("rect",{x:L,y:y+rowH*.10+h+2,width:x(s.prod)-L,height:h,rx:4,fill:"var(--blue)"}));
+    const v1=el("text",{x:x(s.burnout)+7,y:y+rowH*.10+h-2,class:"val",fill:"#8f2426"});v1.textContent=Math.round(s.burnout);g.appendChild(v1);
+    const v2=el("text",{x:x(s.prod)+7,y:y+rowH*.10+h*2,class:"val",fill:"var(--blue-deep)"});v2.textContent=Math.round(s.prod);g.appendChild(v2);
+    hover(g,`<b>${s.name}</b><br>${s.share.toFixed(1)}% of staff · priority #${i+1}<br>
+      <span class="r">Burnout ${s.burnout.toFixed(1)}</span> ·
+      <span class="b">Productivity ${s.prod.toFixed(1)}</span>`,fig);
+    svg.appendChild(g);
+  });
+  table("t-seg",["Group","Share","Burnout","Productivity","Priority"],
+    DATA.segments.map((s,i)=>[s.name,s.share.toFixed(1)+"%",s.burnout.toFixed(1),s.prod.toFixed(1),"#"+(i+1)]));
+})();
+
+/* ---- 2. drivers ---- */
+(function(){
+  const svg=document.getElementById("svg-drv"), fig=document.getElementById("f-drv");
+  const W=900,H=470,mid=W/2, pad=16;
+  const LBL=132, NEG=74;                       // fixed label column, room for the longest negative bar
+  [["burnout",DATA.drivers.burnout,"var(--red)","#8f2426",0],
+   ["productivity",DATA.drivers.productivity,"var(--blue)","var(--blue-deep)",1]].forEach(([key,rows,fill,ink,side])=>{
+    const panel=side?mid+pad:pad;
+    const zero=panel+LBL+NEG, sc=v=>v*((W/2-pad-LBL-NEG-46)/0.60);
+    const rh=(H-40)/Math.max(rows.length,15);
+    const head=el("text",{x:panel,y:14,class:"lbl","font-weight":"600"});
+    head.textContent=side?"Productivity  (R² 0.81)":"Burnout risk  (R² 0.65)";svg.appendChild(head);
+    svg.appendChild(el("line",{x1:zero,x2:zero,y1:24,y2:H-18,class:"gl"}));
+    rows.forEach((r,i)=>{
+      const y=26+i*rh, [nm,v]=r, bw=sc(Math.abs(v)), h=Math.min(rh*.62,15);
+      const g=el("g",{class:"bar"});
+      g.appendChild(el("rect",{x:v<0?zero-bw:zero,y,width:bw,height:h,rx:3,fill}));
+      const t=el("text",{x:panel,y:y+h-2,class:"ax"});t.textContent=nm;
+      t.setAttribute("text-anchor","start");svg.appendChild(t);
+      // negative bars carry their value just inside the axis, so it can never reach the name column
+      const vl=el("text",{x:v<0?zero+6:zero+bw+6,y:y+h-2,class:"val",fill:ink,"text-anchor":"start"});
+      vl.textContent=(v>0?"+":"−")+Math.abs(v).toFixed(2);g.appendChild(vl);
+      hover(g,`<b>${nm}</b><br>${key==="burnout"?"Burnout":"Productivity"} effect ${v>0?"+":"−"}${Math.abs(v).toFixed(3)}<br>
+        <span style="color:#bdbdbd">standardised · holding other habits constant</span>`,fig);
+      svg.appendChild(g);
+    });
+  });
+  const rows=[]; const m=new Map();
+  DATA.drivers.burnout.forEach(([n,v])=>m.set(n,{b:v,p:""}));
+  DATA.drivers.productivity.forEach(([n,v])=>{const e=m.get(n)||{b:"",p:""};e.p=v;m.set(n,e);});
+  m.forEach((v,n)=>rows.push([n, v.b===""?"—":fmt(v.b,3), v.p===""?"—":fmt(v.p,3)]));
+  table("t-drv",["Habit","Effect on burnout","Effect on productivity"],rows);
+})();
+
+/* ---- 3. deep work ---- */
+(function(){
+  const svg=document.getElementById("svg-dw"), fig=document.getElementById("f-dw");
+  const W=900,H=380,L=52,R=26,T=18,B=54, d=DATA.deepwork;
+  const x=i=>L+i*((W-L-R)/(d.length-1)), y=v=>T+(1-v/100)*(H-T-B);
+  svg.appendChild(el("rect",{x:L-14,y:T,width:x(4)+14-(L-14),height:H-T-B,fill:"#f4f4f1"}));
+  const sh=el("text",{x:(L+x(4))/2,y:H-B-14,class:"ax","text-anchor":"middle"});
+  sh.textContent="86% of employees are in this range";svg.appendChild(sh);
+  [0,25,50,75,100].forEach(v=>{
+    svg.appendChild(el("line",{x1:L-14,x2:W-R,y1:y(v),y2:y(v),class:"gl"}));
+    const t=el("text",{x:L-20,y:y(v)+4,class:"ax","text-anchor":"end"});t.textContent=v;svg.appendChild(t);
+  });
+  [["prod","var(--blue)"],["burn","var(--red)"]].forEach(([k,c])=>{
+    svg.appendChild(el("path",{d:d.map((r,i)=>(i?"L":"M")+x(i)+" "+y(r[k])).join(" "),
+      fill:"none",stroke:c,"stroke-width":2.6,"stroke-linejoin":"round"}));
+  });
+  d.forEach((r,i)=>{
+    const t=el("text",{x:x(i),y:H-26,class:"ax","text-anchor":"middle"});t.textContent=r.band;svg.appendChild(t);
+    [["prod","var(--blue)"],["burn","var(--red)"]].forEach(([k,c])=>{
+      const g=el("g",{class:"bar"});
+      g.appendChild(el("circle",{cx:x(i),cy:y(r[k]),r:5.5,fill:c,stroke:"#fff","stroke-width":2}));
+      hover(g,`<b>${r.band} hours of deep work</b><br>${r.share}% of employees<br>
+        <span class="b">Productivity ${r.prod}</span> · <span class="r">Burnout ${r.burn}</span>`,fig);
+      svg.appendChild(g);
+    });
+  });
+  const xl=el("text",{x:(L+W-R)/2,y:H-6,class:"ax","text-anchor":"middle"});
+  xl.textContent="hours of deep work per day";svg.appendChild(xl);
+  table("t-dw",["Deep work (h/day)","Share of staff","Productivity","Burnout"],
+    d.map(r=>[r.band,r.share+"%",r.prod.toFixed(1),r.burn.toFixed(2)]));
+})();
+
+/* ---- 4. what-if ---- */
+(function(){
+  // Both moves are improvements, so both are drawn as gains from zero on one shared points scale.
+  // The min–max range across matched groups is only ~0.15 points wide — too narrow to draw, so it
+  // lives in the tooltip and the table instead of becoming an invisible range bar.
+  const svg=document.getElementById("svg-wi"), fig=document.getElementById("f-wi");
+  const W=900,H=262,L=232,R=58,T=40,rowH=72;
+  const max=23, sc=v=>Math.abs(v)*((W-L-R)/max);
+  [0,5,10,15,20].forEach(v=>{
+    svg.appendChild(el("line",{x1:L+sc(v),x2:L+sc(v),y1:T-14,y2:T+3*rowH-28,class:"gl"}));
+    const t=el("text",{x:L+sc(v),y:T-20,class:"ax","text-anchor":"middle"});t.textContent=v;svg.appendChild(t);
+  });
+  const unit=el("text",{x:L,y:T-40,class:"ax"});
+  unit.textContent="improvement, in points out of 100";svg.appendChild(unit);
+  DATA.whatif.forEach((r,i)=>{
+    const y=T+i*rowH;
+    const nm=el("text",{x:L-18,y:y+14,class:"lbl","text-anchor":"end","font-weight":"600"});
+    nm.textContent=r.change;svg.appendChild(nm);
+    const af=el("text",{x:L-18,y:y+32,class:"ax","text-anchor":"end"});
+    af.textContent="affects "+r.affects.toFixed(0)+"% of staff";svg.appendChild(af);
+    [["b","var(--red)","#8f2426","Burnout falls by",0],
+     ["p","var(--blue)","var(--blue-deep)","Productivity rises by",21]].forEach(([k,c,ink,lab,dy])=>{
+      const lo=r[k+"Min"],hi=r[k+"Max"],av=r[k+"Avg"];
+      const g=el("g",{class:"bar"}), yy=y+dy, bw=sc(av);
+      g.appendChild(el("rect",{x:L,y:yy,width:bw,height:16,rx:4,fill:c}));
+      const t=el("text",{x:L+bw+8,y:yy+13,class:"val",fill:ink});
+      t.textContent=Math.abs(av).toFixed(1);g.appendChild(t);
+      hover(g,`<b>${r.change}</b><br>${lab} ${Math.abs(av).toFixed(1)} points<br>
+        <span style="color:#bdbdbd">across the four matched comparisons:
+        ${Math.abs(hi).toFixed(1)} to ${Math.abs(lo).toFixed(1)}</span>`,fig);
+      svg.appendChild(g);
+    });
+  });
+  table("t-wi",["Change","Burnout (avg)","Burnout range","Productivity (avg)","Productivity range","Affects"],
+    DATA.whatif.map(r=>[r.change,fmt(r.bAvg),`${fmt(r.bMin)} … ${fmt(r.bMax)}`,
+      fmt(r.pAvg),`${fmt(r.pMin)} … ${fmt(r.pMax)}`,r.affects.toFixed(0)+"%"]));
+})();
+
+/* ---- 5. k selection ---- */
+(function(){
+  const svg=document.getElementById("svg-k"), fig=document.getElementById("f-k");
+  const W=900,H=330,L=56,R=40,T=22,B=52, d=DATA.kchoice;
+  const x=i=>L+i*((W-L-R)/(d.length-1)), y=v=>T+(1-(v-0.3)/0.75)*(H-T-B);
+  [0.4,0.6,0.8,1.0].forEach(v=>{
+    svg.appendChild(el("line",{x1:L-12,x2:W-R,y1:y(v),y2:y(v),class:"gl"}));
+    const t=el("text",{x:L-18,y:y(v)+4,class:"ax","text-anchor":"end"});t.textContent=v.toFixed(1);svg.appendChild(t);
+  });
+  svg.appendChild(el("line",{x1:L-12,x2:W-R,y1:y(0.8),y2:y(0.8),stroke:"var(--axis)","stroke-dasharray":"5 4"}));
+  const bar=el("text",{x:L-6,y:y(0.8)-8,class:"ax"});bar.textContent="reliability bar set in advance";svg.appendChild(bar);
+  [["seeds","#cfcec6",2],["data","#8f2426",3]].forEach(([k,c,wd])=>{
+    svg.appendChild(el("path",{d:d.map((r,i)=>(i?"L":"M")+x(i)+" "+y(r[k])).join(" "),
+      fill:"none",stroke:c,"stroke-width":wd,"stroke-linejoin":"round"}));
+  });
+  d.forEach((r,i)=>{
+    const t=el("text",{x:x(i),y:H-26,class:"ax","text-anchor":"middle"});t.textContent="k = "+r.k;svg.appendChild(t);
+    [["seeds","#cfcec6"],["data","#8f2426"]].forEach(([k,c])=>{
+      const g=el("g",{class:"bar"});
+      g.appendChild(el("circle",{cx:x(i),cy:y(r[k]),r:k==="data"?6.5:5,fill:c,stroke:"#fff","stroke-width":2}));
+      hover(g,`<b>${r.k} groups</b><br>${k==="data"?"Across employee samples":"Across random seeds"}: ${r[k].toFixed(3)}<br>
+        <span style="color:#bdbdbd">${r[k]>=0.8?"clears":"fails"} the reliability bar</span>`,fig);
+      svg.appendChild(g);
+    });
+    if(r.k===8){
+      const w=el("text",{x:x(i),y:y(r.data)-16,class:"val",fill:"#8f2426","text-anchor":"middle"});
+      w.textContent="0.98";svg.appendChild(w);
+    }
+  });
+  const yl=el("text",{x:L-18,y:T-6,class:"ax","text-anchor":"end"});yl.textContent="ARI";svg.appendChild(yl);
+  table("t-k",["Groups","Across random seeds","Across employee samples","Verdict"],
+    d.map(r=>[r.k,r.seeds.toFixed(3),r.data.toFixed(3),r.data>=0.8?"reliable":"not reliable"]));
+})();
+</script>
+</body>
+</html>

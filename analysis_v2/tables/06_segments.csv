@@ -1,0 +1,9 @@
+segment,rank,share_pct,burnout,productivity,risk_score
+Exhaustion HIGH / Stress HIGH / Deep work LOW,1,10.232625,68.350716,54.267277,1.8544954
+Exhaustion HIGH / Stress HIGH / Deep work HIGH,2,9.782891,67.13157,75.63583,1.1796274
+Exhaustion HIGH / Stress LOW / Deep work LOW,3,10.232104,53.674717,60.00445,1.1592448
+Exhaustion LOW / Stress HIGH / Deep work LOW,4,15.31868,48.69661,61.95571,0.98484373
+Exhaustion HIGH / Stress LOW / Deep work HIGH,5,9.765849,52.330227,80.441,0.6047737
+Exhaustion LOW / Stress LOW / Deep work LOW,6,15.322366,33.9425,67.535965,0.5779495
+Exhaustion LOW / Stress HIGH / Deep work HIGH,7,14.657478,47.425003,81.92691,0.47712627
+Exhaustion LOW / Stress LOW / Deep work HIGH,8,14.688007,32.73673,86.13973,0.19346939

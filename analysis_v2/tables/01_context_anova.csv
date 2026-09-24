@@ -1,0 +1,7 @@
+context,outcome,eta_squared,F,p_value
+occupation,burnout_risk,4.3312107e-07,0.33292985,0.9199211
+occupation,productivity_score,9.285256e-07,0.71373594,0.638517
+work_mode,burnout_risk,3.1096906e-08,0.071710385,0.93080044
+work_mode,productivity_score,3.0366456e-07,0.7002597,0.4964564
+device_usage_type,burnout_risk,1.9863757e-07,0.45806417,0.6325069
+device_usage_type,productivity_score,4.398978e-07,1.0144178,0.3626136
