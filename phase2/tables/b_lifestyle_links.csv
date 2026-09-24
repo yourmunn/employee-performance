@@ -1,0 +1,11 @@
+from,to,r
+Late-night device use,Sleep,-0.0004
+Late-night device use,Sleep quality,0.0003
+Screen time,Sleep quality,-0.0007
+Caffeine intake,Sleep,0.0002
+Stress,Sleep quality,0.0
+Physical activity,Stress,-0.0004
+Distractions per day,Deep work,-0.0002
+Notifications per day,Distractions per day,0.0006
+Meetings,Deep work,-0.0002
+Emotional exhaustion,Motivation,-0.0003

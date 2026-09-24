@@ -1,0 +1,26 @@
+,burnout_risk,productivity_score
+Screen time (h/day),1.9539,-0.6751
+Social media (h/day),-0.0025,-1.7274
+Doomscrolling (h/day),3.9055,-1.3543
+App switches per day,0.0001,-0.0258
+Notifications per day,0.0195,-0.0067
+Phone unlocks per day,0.0001,-0.0001
+Late-night device use (0/1),7.3378,-2.5382
+Focus sessions per day,0.0008,1.727
+Deep work (h/day),-0.6032,6.9818
+Distractions per day,0.0975,-0.0337
+Task completion rate (%),-0.0003,0.4341
+Concentration (1-10),0.0016,2.6026
+Meetings (h/day),-0.0019,-0.0029
+Sleep (h/night),-1.9551,0.676
+Sleep quality (1-10),-0.0008,0.0009
+"Caffeine intake (per day, unit not stated)",-0.0015,0.0002
+Physical activity (h/day),-2.9309,1.0157
+Stress (1-10),2.941,-1.0164
+Workspace quality (1-10),-0.0003,1.2933
+Internet stability (1-10),-0.0008,0.0004
+Remote days per week,-0.004,0.0007
+Motivation (1-10),0.0012,1.7279
+Mental fatigue (1-10),-0.0019,0.0027
+Emotional exhaustion (1-10),3.93,-1.359
+Job satisfaction (1-10),-1.954,0.6753
