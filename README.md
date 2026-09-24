@@ -9,6 +9,9 @@ action.
 | [Analysis notebook](project_employee%20performance%20analysis.ipynb) | Every step of the analysis, one step per cell, with the output shown under each cell |
 | [Interactive report](visualize/report.html) | A four-sheet dashboard with filters. GitHub cannot display HTML, so download the file and open it in a browser |
 | [Excel report](visualize/report.xlsx) | The same findings as live tables, charts and formulas |
+| [Phase 2 report](phase2/PHASE2_REPORT.md) | Lifestyle profile of each group, root-cause analysis and personal routines with cost and benefit, with 38 cited sources |
+| [Phase 2 notebook](phase2/phase2_lifestyle_root_causes.ipynb) | The data work behind Phase 2 |
+| [Follow-up survey](phase2/survey_questionnaire.md) | A questionnaire to test the root-cause hypotheses with real employees |
 
 ![Preview of the interactive report](visualize/figures/00_report_preview.png)
 
@@ -150,6 +153,27 @@ These are hypotheses to test with a comparison group, then measure again with th
 | 5 | N3 (17%) | Low focus | Time-management training; meeting-free days | Deep-work hours, task completion |
 | 6 | N5, N6 (33%) | – | Keep current practices; act as comparison groups and peer mentors | – |
 
+These are broad directions. Phase 2 turns them into specific daily routines for each group.
+
+---
+
+## Phase 2: root causes and personal routines
+
+The [Phase 2 report](phase2/PHASE2_REPORT.md) takes the six groups further:
+
+1. **Lifestyle survey of the records.** Sleep, activity, caffeine and stress are the same in every group: about 63%
+   sleep under 7 hours and 30% report high stress everywhere. The groups differ only in device use, focus and mental
+   strain.
+2. **Root-cause analysis** with 5 Whys, fishbone diagrams, SWOT, the Job Demands–Resources model, Effort–Reward
+   Imbalance, Areas of Worklife, the stressor–detachment model and COM-B. The synthetic data cannot show causes, so
+   each cause is marked as a measured difference or as a hypothesis for the
+   [follow-up survey](phase2/survey_questionnaire.md).
+3. **Personal routines** for each group (for example, notifications batched three times a day for N2, two protected
+   90-minute focus blocks for N3, a fixed end time and no evening email for N4), each linked to published research,
+   with the time, money and downsides of each change and a model-based estimate of its benefit.
+
+![Example weekday routines by group](phase2/figures/p2_05_routines.png)
+
 ---
 
 ## How the groups were built
@@ -178,6 +202,22 @@ How far to trust the groups:
 The low silhouette is expected: the input factors are almost unrelated to each other, so the data forms one even
 cloud. The six groups are therefore a practical way to divide the risk space, not natural "types" of people.
 
+## A second analysis revisited this and changed one answer
+
+[`analysis_v2/`](analysis_v2/) reworks the same data with the method argued in the open and with a
+verification loop that ran until the results stopped changing. It reaches **eight** groups rather
+than the six below.
+
+The reason is worth stating here: choosing the number of groups by re-running the clustering with
+different random seeds is not a strong enough test. A number of groups can be perfectly
+reproducible on one fixed dataset and still fall apart when the employees change. Testing against
+independent samples of employees moves the answer to eight, which is also the natural count once
+you see that the groups separate on three habits at two levels each.
+
+See [`analysis_v2/README.md`](analysis_v2/README.md) for the full comparison. The findings below
+stand on their own method; where the two disagree, the second analysis has the better-tested
+argument.
+
 ## Limitations
 
 - The data is synthetic. Re-run the process on real HR data before making decisions about real employees.
@@ -198,13 +238,25 @@ cloud. The six groups are therefore a practical way to divide the risk space, no
 │   ├── build_report_html.py     # builds visualize/report.html from the notebook outputs
 │   ├── report_template.html     # HTML/CSS/JS of the interactive report
 │   └── build_report_excel.py    # builds visualize/report.xlsx from the notebook outputs
+├── phase2/
+│   ├── PHASE2_REPORT.md         # root causes, routines, cost and benefit, references
+│   ├── phase2_lifestyle_root_causes.ipynb
+│   ├── survey_questionnaire.md  # follow-up survey to test the root-cause hypotheses
+│   ├── figures/                 # charts used in the Phase 2 report
+│   └── tables/                  # tables exported by the Phase 2 notebook
+├── analysis_v2/                 # a second, independent pass at the same data
+│   ├── README.md                # what it found, and where it disagrees with this one
+│   ├── analysis_v2.ipynb        # method comparison, driver model, segmentation, verification log
+│   ├── figures/
+│   └── tables/
 ├── reports/                     # tables exported by the notebook (CSV, JSON)
 ├── visualize/
 │   ├── report.html              # interactive report (open in a browser)
 │   ├── report.xlsx              # Excel report
 │   └── figures/                 # charts used in this README
 ├── data/                        # not in the repository (see below)
-└── requirements.txt
+├── requirements.txt
+└── PROJECT_LOG.md               # how this project was built: environment, timeline, decisions and fixes
 ```
 
 ## How to reproduce
@@ -223,6 +275,7 @@ cloud. The six groups are therefore a practical way to divide the risk space, no
    jupyter nbconvert --to notebook --execute --inplace "project_employee performance analysis.ipynb"
    python src/build_report_html.py
    python src/build_report_excel.py
+   jupyter nbconvert --to notebook --execute --inplace phase2/phase2_lifestyle_root_causes.ipynb
    ```
    For a quick test run, set the environment variable `NB_NROWS=200000` before running the notebook.
 
