@@ -83,7 +83,7 @@ LABELS = {
     "meeting_hours": "Meetings (h/day)",
     "sleep_hours": "Sleep (h/night)",
     "sleep_quality": "Sleep quality (1-10)",
-    "caffeine_intake": "Caffeine (cups/day)",
+    "caffeine_intake": "Caffeine intake (per day, unit not stated)",
     "physical_activity": "Physical activity (h/day)",
     "stress_level": "Stress (1-10)",
     "workspace_quality": "Workspace quality (1-10)",

@@ -14,7 +14,7 @@ concentration_score,Concentration,Focus & output,-0.0,0.3473
 meeting_hours,Meetings,Focus & output,-0.0001,-0.0005
 sleep_hours,Sleep,Sleep & recovery,-0.1294,0.0462
 sleep_quality,Sleep quality,Sleep & recovery,-0.0,0.0
-caffeine_intake,Caffeine,Sleep & recovery,-0.0007,0.0008
+caffeine_intake,Caffeine intake,Sleep & recovery,-0.0007,0.0008
 physical_activity,Physical activity,Sleep & recovery,-0.1107,0.04
 stress_level,Stress,Sleep & recovery,0.3828,-0.135
 workspace_quality,Workspace quality,Work environment,0.0001,0.1723

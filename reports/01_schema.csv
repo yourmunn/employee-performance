@@ -18,7 +18,7 @@ task_completion_rate,Task completion rate (%),Focus & output,float32,61,0,0.0
 concentration_score,Concentration (1-10),Focus & output,float32,10,0,0.0
 sleep_hours,Sleep (h/night),Sleep & recovery,float32,71,100000,2.0
 sleep_quality,Sleep quality (1-10),Sleep & recovery,float32,10,0,0.0
-caffeine_intake,Caffeine (cups/day),Sleep & recovery,float32,8,0,0.0
+caffeine_intake,"Caffeine intake (per day, unit not stated)",Sleep & recovery,float32,8,0,0.0
 physical_activity,Physical activity (h/day),Sleep & recovery,float32,51,0,0.0
 stress_level,Stress (1-10),Sleep & recovery,float32,10,0,0.0
 workspace_quality,Workspace quality (1-10),Work environment,float32,10,0,0.0
